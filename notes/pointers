@@ -1,0 +1,13 @@
+A pointer is just an address — a way to point to where something lives in memory.
+
+Think of it like this:
+
+You live in a house. Your house has an address. If someone knows your address, they can visit you and change your furniture.
+A pointer is that address.
+
+x := 10        // x is a value
+p := &x        // p is a pointer TO x (use & to get address)
+
+*p = 20        // change the value of x using the pointer
+fmt.Println(x) // 20
+
