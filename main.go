@@ -27,4 +27,14 @@ func main() {
 	concepts.Swap(&x, &y)
 	fmt.Println("Swapped values:", x, y)	
 
+
+	car := concepts.Car{Mile: 2400, Brand: "Toyota Avalon", Color: "Red"}
+	fmt.Println(car)
+
+	fmt.Println("for every test ride, a mile is added to", car.Mile)
+	concepts.CarInfo(&car)
+
+	fmt.Println("for every test ride, a mile is added to", car.Mile)
+	concepts.CarInfo(&car)
+
 	}

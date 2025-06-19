@@ -15,3 +15,15 @@ func Swap(x, y *int){
 	*x = *y
 	*y = temp
 }
+
+
+type Car struct{
+	Color, Brand string
+	Mile float64
+}
+
+
+func CarInfo(c *Car){
+	c.Mile++
+	fmt.Printf("for %v, with color %v, it has a mile of %v\n", c.Brand, c.Color, c.Mile )
+}
