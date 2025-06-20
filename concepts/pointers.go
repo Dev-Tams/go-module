@@ -22,8 +22,36 @@ type Car struct{
 	Mile float64
 }
 
+type Person struct{
+	Name, Career string
+	Age int
+}
 
-func CarInfo(c *Car){
+
+type Counter struct{
+	Value int
+}
+
+func(c *Counter) Increment(){
+	c.Value++
+}
+func(c *Counter) Decrement(){
+	c.Value--
+}
+func(c *Counter) Reset(){
+	c.Value = 0
+}
+func(c *Counter)Show() string{
+	return fmt.Sprintf("Current count is:%v", c.Value)
+} 
+func CarInfo(c *Car) string{
 	c.Mile++
-	fmt.Printf("for %v, with color %v, it has a mile of %v\n", c.Brand, c.Color, c.Mile )
+	return fmt.Sprintf("for %v, with color %v, it has a mile of %0.2f\n", c.Brand, c.Color, c.Mile )
+}
+
+
+func(h *Person) Hbd() string {
+	h.Age++
+	return  fmt.Sprintf("Happy birthday %v, you are now %v year's old \n Whats the next intent on your %v career", h.Name, h.Age, h.Career)
+	
 }

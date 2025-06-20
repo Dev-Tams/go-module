@@ -37,4 +37,19 @@ func main() {
 	fmt.Println("for every test ride, a mile is added to", car.Mile)
 	concepts.CarInfo(&car)
 
+	B := concepts.Person{Name: "Tami", Age: 23, Career: "Programming"}
+	fmt.Println(B)
+	fmt.Println(B.Hbd())
+	fmt.Println(B.Hbd())
+	fmt.Println(B.Hbd())
+
+	cv := concepts.Counter{Value: 5}
+	fmt.Println(cv.Show()) 
+    cv.Increment()
+    cv.Increment()
+    fmt.Println(cv.Show()) 
+    cv.Decrement()
+    fmt.Println(cv.Show()) 
+    cv.Reset()
+    fmt.Println(cv.Show()) 
 	}
