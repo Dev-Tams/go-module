@@ -38,15 +38,30 @@ func(c *Counter) Increment(){
 func(c *Counter) Decrement(){
 	c.Value--
 }
-func(c *Counter) Reset(){
+func(c *Counter) Reset() string{
 	c.Value = 0
+	return fmt.Sprintf("Current count has been reset to: %v", c.Value)
 }
-func(c *Counter)Show() string{
+func(c *Counter) Show() string{
 	return fmt.Sprintf("Current count is:%v", c.Value)
 } 
+
+func(c *Counter) Multiply(n int) string{
+	c.Value *= n
+	return fmt.Sprintf("Current count multiplied by %v is: %v", n, c.Value)
+} 
+
+
+
+
 func CarInfo(c *Car) string{
 	c.Mile++
 	return fmt.Sprintf("for %v, with color %v, it has a mile of %0.2f\n", c.Brand, c.Color, c.Mile )
+}
+
+func (c *Car) Repaint(newColor string) string{
+		c.Color = newColor
+		return fmt.Sprintf("for %v, with mile of %0.2f, repainted color to %v \n", c.Brand, c.Mile, c.Color )
 }
 
 

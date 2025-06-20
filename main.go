@@ -29,13 +29,21 @@ func main() {
 
 
 	car := concepts.Car{Mile: 2400, Brand: "Toyota Avalon", Color: "Red"}
+
+	ecar := concepts.ElectricCar{
+		Car: concepts.Car{Mile: 2400, Brand: "Tesla", Color: "Red"},
+		BatteryHealth: 85,
+	}
+	fmt.Println(ecar)
 	fmt.Println(car)
 
 	fmt.Println("for every test ride, a mile is added to", car.Mile)
 	concepts.CarInfo(&car)
 
 	fmt.Println("for every test ride, a mile is added to", car.Mile)
-	concepts.CarInfo(&car)
+	concepts.CarInfo(&ecar.Car)
+	fmt.Println(car.Repaint("Black"))
+	fmt.Println(ecar.Repaint("Grey"))
 
 	B := concepts.Person{Name: "Tami", Age: 23, Career: "Programming"}
 	fmt.Println(B)
@@ -50,6 +58,8 @@ func main() {
     fmt.Println(cv.Show()) 
     cv.Decrement()
     fmt.Println(cv.Show()) 
-    cv.Reset()
+	fmt.Println(cv.Multiply(3))
+	fmt.Println(cv.Show()) 
+    fmt.Println(cv.Reset())
     fmt.Println(cv.Show()) 
 	}
