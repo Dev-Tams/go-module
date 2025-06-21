@@ -1,0 +1,38 @@
+What is an Interface?
+An interface in Go is like a contract that says:
+
+"If your type can do this, then you belong in this group."
+
+In Go terms:
+
+A type implements an interface if it has the methods the interface requires.
+
+Let’s say you have different types of vehicles:
+1 Car
+2 Bike
+3 Truck
+
+They’re different, but they can all drive, right?
+
+So we define an interface called:
+
+type Drivable interface {
+	Drive() string
+}
+
+type Car struct {
+	Brand string
+}
+
+func (c Car) Drive() string {
+	return fmt.Sprintf("%v is driving...", c.Brand)
+}
+func StartJourney(d Drivable) {
+	fmt.Println(d.Drive())
+}
+
+func main() {
+	car := Car{Brand: "Toyota"}
+	StartJourney(car) 
+}
+
