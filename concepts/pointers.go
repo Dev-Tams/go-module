@@ -64,6 +64,11 @@ func (c *Car) Repaint(newColor string) string{
 		return fmt.Sprintf("for %v, with mile of %0.2f, repainted color to %v \n", c.Brand, c.Mile, c.Color )
 }
 
+func (c *ElectricCar) Charge() string{
+		c.BatteryHealth ++
+		return fmt.Sprintf("Charging %v..., Battery at %v", c.Brand, c.BatteryHealth) 
+}
+
 
 func(h *Person) Hbd() string {
 	h.Age++

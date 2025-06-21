@@ -44,6 +44,7 @@ func main() {
 	concepts.CarInfo(&ecar.Car)
 	fmt.Println(car.Repaint("Black"))
 	fmt.Println(ecar.Repaint("Grey"))
+	fmt.Println(ecar.Charge())
 
 	B := concepts.Person{Name: "Tami", Age: 23, Career: "Programming"}
 	fmt.Println(B)
