@@ -11,7 +11,7 @@ type Email struct {
 }
 
 type Sms struct {
-	Phone_number int
+	Phone_number string
 }
 
 func (e Email) Notify() string {

@@ -75,9 +75,33 @@ func main() {
 	fmt.Println("Area of rectangle:", rectangle.Area())
 
 
+	//instead of // calling the Notify method directly, we can use the Notifier interface
+	// to send notifications through different channels like Email and SMS.
+
 	email := concepts.Email{Address: "test@mail.com"}
 	concepts.SendNoti(email)
-	call := concepts.Sms{Phone_number: +234-00-00-1}
+	call := concepts.Sms{Phone_number: "+234-00-00-1"}
 	concepts.SendNoti(call)
 
+	// Using a slice of Notifier interface to send notifications
+	// This allows us to handle multiple notification types in a single loop.
+		notifiers := []concepts.Notifier{
+		concepts.Email{Address: "test@mail.com"},
+		concepts.Sms{Phone_number: "+234-00-00-1"},
+	}
+
+	for _, n := range notifiers {
+		concepts.SendNoti(n)
+	}
+
+	
+
+	payments := []concepts.PaymentMethods{
+	{Method: concepts.CreditCard{Name: "Tami"}, Amount: 300},
+	{Method: concepts.Paypal{Email: "tami@mail.com"}, Amount: 150},
+	{Method: concepts.CryptoWallet{Address: "0x123abc456"}, Amount: 820},
+}
+ for _, p := range payments{
+		concepts.ProcessPayment(p.Method, p.Amount) // Process payment using the interface method
+ }
 	}
