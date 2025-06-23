@@ -4,7 +4,7 @@ A METHOD IS JUST A FUNCTION WITH A RECIEVER ARGUMENT.
 
 The receiver appears in its own argument list between the func keyword and the method name.
 
-In this example, the Abs method has a receiver of type Vertex named v.
+In this example, the Abs method has a receiver of type Calc named c.
 
 
 In simple words a method is a named function

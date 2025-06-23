@@ -104,4 +104,10 @@ func main() {
  for _, p := range payments{
 		concepts.ProcessPayment(p.Method, p.Amount) // Process payment using the interface method
  }
-	}
+
+ 	//refresher
+ 	u := concepts.UserSub{Name: "Tami", Amount:0}
+	u.CheckUSerSub()
+ 	fmt.Print(u.ChangeUserSub(30))
+	u.CheckUSerSub()
+}
