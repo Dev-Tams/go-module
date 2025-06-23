@@ -108,6 +108,8 @@ func main() {
  	//refresher
  	u := concepts.UserSub{Name: "Tami", Amount:0}
 	u.CheckUSerSub()
- 	fmt.Print(u.ChangeUserSub(30))
+	u.SetUserSub()
+ 	fmt.Print(u.PayUserSub(30))
+	u.SetUserSub()
 	u.CheckUSerSub()
 }

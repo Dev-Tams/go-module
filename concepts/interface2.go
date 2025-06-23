@@ -20,7 +20,7 @@ func (e Email) Notify() string {
 
 
 func (s Sms) Notify() string {
-	return fmt.Sprintf("calling %v", s.Phone_number)
+	return fmt.Sprintf("texting %v", s.Phone_number)
 }
 
 

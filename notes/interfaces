@@ -24,8 +24,17 @@ type Car struct {
 	Brand string
 }
 
+type Bike struct {
+	Car
+	liter float64
+}
+
 func (c Car) Drive() string {
 	return fmt.Sprintf("%v is driving...", c.Brand)
+}
+
+func (b Bike) Drive() string {
+	return fmt.Sprintf("%v is driving...", b.Brand)
 }
 func StartJourney(d Drivable) {
 	fmt.Println(d.Drive())
