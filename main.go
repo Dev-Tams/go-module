@@ -106,10 +106,19 @@ func main() {
  }
 
  	//refresher
- 	u := concepts.UserSub{Name: "Tami", Amount:0}
+ 	u := concepts.UserSub{Name: "Tami", Amount: 0}
 	u.CheckUSerSub()
 	u.SetUserSub()
  	fmt.Print(u.PayUserSub(30))
 	u.SetUserSub()
 	u.CheckUSerSub()
+
+	syslogger := []concepts.LogJob{
+		{Logger: concepts.ConsoleLogger{}, Message: "prints to screen"},
+		{Logger: concepts.FileLogger{Filename: "sys"}, Message: "writing to file"},
+		{Logger: concepts.RemoteLogger{Endpoint: "sys123"}, Message: "sending log to server"},
+	}
+	for _, p := range syslogger{
+		concepts.SendLog(p.Logger, p.Message)
+	}
 }
