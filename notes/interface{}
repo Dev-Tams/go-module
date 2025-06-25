@@ -1,0 +1,53 @@
+ Let’s dive into interface{}, type assertions, and type switches.
+ They are powerful tools when writing flexible Go code.
+
+In Go, interface{} is the empty interface. It means “any type” — literally any value can be assigned to it.
+
+
+var anyValue interface{}
+anyValue = 42          // int
+anyValue = "hello"     // string
+anyValue = true        // bool
+
+
+Useful when:
+
+You don’t know the exact type at compile time
+
+You’re writing a generic function
+
+You’re handling JSON or dynamic data
+
+
+Type Assertion
+You can extract the real value from an interface{} using type assertion:
+
+
+var a interface{} = "Tami"
+
+s := a.(string)           // Now s is a string
+fmt.Println("Value:", s)
+
+
+
+If the type is wrong, Go panics. You can avoid this with a comma-ok form:
+s, ok := a.(string)
+if ok {
+	fmt.Println("It's a string:", s)
+} else {
+	fmt.Println("Not a string!")
+}
+
+
+func CheckType(x interface{}) {
+	switch v := x.(type) {
+	case int:
+		fmt.Println("It's an int:", v)
+	case string:
+		fmt.Println("It's a string:", v)
+	case bool:
+		fmt.Println("It's a bool:", v)
+	default:
+		fmt.Println("Unknown type")
+	}
+}

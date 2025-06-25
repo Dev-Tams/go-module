@@ -1,0 +1,9 @@
+Practice with interface{} and type assertions/switches
+
+Do a polymorphic "Animal" system
+
+Deep dive into struct embedding & method inheritance
+
+Jump into Go error handling (errors.New, custom errors, wrapping, etc.)
+
+Start Go concurrency basics (goroutines + channels)
