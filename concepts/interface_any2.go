@@ -24,15 +24,15 @@ func (e ErrorLog) Log() string{
 
 }
 
-func LogAnything(data any) {
+func LogAnything(data any) string{
 	switch v := data.(type) {
 	case string:
-		fmt.Println("[STRING]", v)
+		return fmt.Sprintf("[STRING] %v", v)
 	case int:
-		fmt.Println("[NUMBER]", v)
+		return fmt.Sprintf("[NUMBER] %v", v)
 	case Logger:
-		fmt.Printf("[%T] %v\n", v, v.Log())
+		return fmt.Sprintf("[%T] %v", v, v.Log())
 	default: 
-		fmt.Sprintln("[UNKNOWN TYPE]", "{%v}", v)
+		return fmt.Sprintf("[UNKNOWN TYPE] %v", v)
 	}
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/Dev-Tams/go-module/concepts"
 	"github.com/Dev-Tams/go-module/refresh"
@@ -16,7 +17,6 @@ func main() {
 	// m := concepts.Calc{X: 3, Y:4}
 	// fmt.Println(m.Example())
 
-
 	// // Pointers
 	// // Pointers are used to reference a memory address of a variable.
 	// cp := 6.3
@@ -24,10 +24,9 @@ func main() {
 	// fmt.Println("Multiplied pointer value by 2:", cp)
 
 	// x, y := 5, 10
-	// fmt.Println("Before swapped:", x, y)	
+	// fmt.Println("Before swapped:", x, y)
 	// concepts.Swap(&x, &y)
-	// fmt.Println("Swapped values:", x, y)	
-
+	// fmt.Println("Swapped values:", x, y)
 
 	// car := concepts.Car{Mile: 2400, Brand: "Toyota Avalon", Color: "Red"}
 
@@ -54,18 +53,16 @@ func main() {
 	// fmt.Println(B.Hbd())
 
 	// cv := concepts.Counter{Value: 5}
-	// fmt.Println(cv.Show()) 
-    // cv.Increment()
-    // cv.Increment()
-    // fmt.Println(cv.Show()) 
-    // cv.Decrement()
-    // fmt.Println(cv.Show()) 
+	// fmt.Println(cv.Show())
+	// cv.Increment()
+	// cv.Increment()
+	// fmt.Println(cv.Show())
+	// cv.Decrement()
+	// fmt.Println(cv.Show())
 	// fmt.Println(cv.Multiply(3))
-	// fmt.Println(cv.Show()) 
-    // fmt.Println(cv.Reset())
-    // fmt.Println(cv.Show()) 
-
-
+	// fmt.Println(cv.Show())
+	// fmt.Println(cv.Reset())
+	// fmt.Println(cv.Show())
 
 	// Interfaces
 	// circle := concepts.Circle{Radius: 5}
@@ -74,7 +71,6 @@ func main() {
 	// concepts.PrintArea(rectangle)
 	// fmt.Println("Area of circle:", circle.Area()) //Direct call is explicit and flexible
 	// fmt.Println("Area of rectangle:", rectangle.Area())
-
 
 	//instead of // calling the Notify method directly, we can use the Notifier interface
 	// to send notifications through different channels like Email and SMS.
@@ -95,22 +91,20 @@ func main() {
 	// 	concepts.SendNoti(n)
 	// }
 
-	
-
 	payments := []concepts.PaymentMethods{
-	{Method: concepts.CreditCard{Name: "Tami"}, Amount: 300},
-	{Method: concepts.Paypal{Email: "tami@mail.com"}, Amount: 150},
-	{Method: concepts.CryptoWallet{Address: "0x123abc456"}, Amount: 820},
-}
- for _, p := range payments{
+		{Method: concepts.CreditCard{Name: "Tami"}, Amount: 300},
+		{Method: concepts.Paypal{Email: "tami@mail.com"}, Amount: 150},
+		{Method: concepts.CryptoWallet{Address: "0x123abc456"}, Amount: 820},
+	}
+	for _, p := range payments {
 		concepts.ProcessPayment(p.Method, p.Amount) // Process payment using the interface method
- }
+	}
 
- 	// //refresher
- 	// u := refresh.UserSub{Name: "Tami", Amount: 0}
+	// //refresher
+	// u := refresh.UserSub{Name: "Tami", Amount: 0}
 	// u.CheckUSerSub()
 	// u.SetUserSub()
- 	// fmt.Print(u.PayUserSub(30))
+	// fmt.Print(u.PayUserSub(30))
 	// u.SetUserSub()
 	// u.CheckUSerSub()
 
@@ -119,19 +113,18 @@ func main() {
 		{Logger: refresh.FileLogger{Filename: "sys"}, Message: "writing to file"},
 		{Logger: refresh.RemoteLogger{Endpoint: "sys123"}, Message: "sending log to server"},
 	}
-	for _, p := range syslogger{
+	for _, p := range syslogger {
 		refresh.SendLog(p.Logger, p.Message)
 	}
 
+	var a any = "Tami"
 
-	 var a any = "Tami"
-
-	s, ok := a.(string) 
+	s, ok := a.(string)
 	if ok {
 		fmt.Println("Value:", s)
-	} else{
-		 fmt.Println("interface conversion: interface {} is not string")
-	}     
+	} else {
+		fmt.Println("interface conversion: interface {} is not string")
+	}
 	var x any = "Tami"
 	concepts.CheckType(x)
 	concepts.CheckType(true)
@@ -142,11 +135,31 @@ func main() {
 	concepts.Process(c)
 	concepts.Process(false)
 
-	concepts.LogAnything("Hello there!")
-	concepts.LogAnything(43)
-	concepts.LogAnything(concepts.UserLog{Name: "Tami"})
-	concepts.LogAnything(concepts.ErrorLog{Code: 404, Message: "Not found"})
-	concepts.LogAnything(123.456)
+	var logbook []string
 
+	logbook = append(logbook, concepts.LogAnything("Hello there!"))
+	logbook = append(logbook, concepts.LogAnything(43))
+	logbook = append(logbook, concepts.LogAnything(concepts.UserLog{Name: "Tami"}))
+	logbook = append(logbook, concepts.LogAnything(concepts.ErrorLog{Code: 404, Message: "Not found"}))
+	logbook = append(logbook, concepts.LogAnything(123.456))
+
+	filename := "logbook.txt"
+	
+	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println("Error writing to file:", err)
+		return
+	}
+	defer f.Close()
+
+	for _, entry := range logbook {
+		_, err := f.WriteString(entry + "\n")
+		if err != nil {
+			fmt.Println("Error writing entry:", err)
+			return
+		}
+	}
+
+	fmt.Println("Log entries appended to", filename)
 
 }
