@@ -5,6 +5,7 @@ In Go, interface{} is the empty interface. It means “any type” — literally
 
 
 var anyValue interface{}
+can be written as: var anyvalue any, and inside a function, you can use it like this: anyvalue := any
 anyValue = 42          // int
 anyValue = "hello"     // string
 anyValue = true        // bool
@@ -37,6 +38,8 @@ if ok {
 } else {
 	fmt.Println("Not a string!")
 }
+
+Type switches help check the underlying type stored in interface{}:
 
 
 func CheckType(x interface{}) {

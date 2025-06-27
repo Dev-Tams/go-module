@@ -10,8 +10,8 @@ import (
 func main() {
 
 	// Methods
-	// c := concepts.SayHi()
-	// fmt.Println(c)
+	c := concepts.SayHi()
+	fmt.Println(c)
 
 	// m := concepts.Calc{X: 3, Y:4}
 	// fmt.Println(m.Example())
@@ -68,32 +68,32 @@ func main() {
 
 
 	// Interfaces
-	circle := concepts.Circle{Radius: 5}
-	rectangle := concepts.Rectangle{Width: 4, Height: 6}
-	concepts.PrintArea(circle) //Interface call is abstract and reusable
-	concepts.PrintArea(rectangle)
-	fmt.Println("Area of circle:", circle.Area()) //Direct call is explicit and flexible
-	fmt.Println("Area of rectangle:", rectangle.Area())
+	// circle := concepts.Circle{Radius: 5}
+	// rectangle := concepts.Rectangle{Width: 4, Height: 6}
+	// concepts.PrintArea(circle) //Interface call is abstract and reusable
+	// concepts.PrintArea(rectangle)
+	// fmt.Println("Area of circle:", circle.Area()) //Direct call is explicit and flexible
+	// fmt.Println("Area of rectangle:", rectangle.Area())
 
 
 	//instead of // calling the Notify method directly, we can use the Notifier interface
 	// to send notifications through different channels like Email and SMS.
 
-	email := concepts.Email{Address: "test@mail.com"}
-	concepts.SendNoti(email)
-	call := concepts.Sms{Phone_number: "+234-00-00-1"}
-	concepts.SendNoti(call)
+	// email := concepts.Email{Address: "test@mail.com"}
+	// concepts.SendNoti(email)
+	// call := concepts.Sms{Phone_number: "+234-00-00-1"}
+	// concepts.SendNoti(call)
 
 	// Using a slice of Notifier interface to send notifications
 	// This allows us to handle multiple notification types in a single loop.
-		notifiers := []concepts.Notifier{
-		concepts.Email{Address: "test@mail.com"},
-		concepts.Sms{Phone_number: "+234-00-00-1"},
-	}
+	// 	notifiers := []concepts.Notifier{
+	// 	concepts.Email{Address: "test@mail.com"},
+	// 	concepts.Sms{Phone_number: "+234-00-00-1"},
+	// }
 
-	for _, n := range notifiers {
-		concepts.SendNoti(n)
-	}
+	// for _, n := range notifiers {
+	// 	concepts.SendNoti(n)
+	// }
 
 	
 
@@ -106,13 +106,13 @@ func main() {
 		concepts.ProcessPayment(p.Method, p.Amount) // Process payment using the interface method
  }
 
- 	//refresher
- 	u := refresh.UserSub{Name: "Tami", Amount: 0}
-	u.CheckUSerSub()
-	u.SetUserSub()
- 	fmt.Print(u.PayUserSub(30))
-	u.SetUserSub()
-	u.CheckUSerSub()
+ 	// //refresher
+ 	// u := refresh.UserSub{Name: "Tami", Amount: 0}
+	// u.CheckUSerSub()
+	// u.SetUserSub()
+ 	// fmt.Print(u.PayUserSub(30))
+	// u.SetUserSub()
+	// u.CheckUSerSub()
 
 	syslogger := []refresh.LogJob{
 		{Logger: refresh.ConsoleLogger{}, Message: "prints to screen"},
@@ -122,4 +122,25 @@ func main() {
 	for _, p := range syslogger{
 		refresh.SendLog(p.Logger, p.Message)
 	}
+
+
+	 var a any = "Tami"
+
+	s, ok := a.(string) 
+	if ok {
+		fmt.Println("Value:", s)
+	} else{
+		 fmt.Println("interface conversion: interface {} is not string")
+	}     
+	var x any = "Tami"
+	concepts.CheckType(x)
+	concepts.CheckType(true)
+	concepts.Process("Test Type")
+	concepts.Process(10)
+	concepts.Process(true)
+	concepts.Process(3.24)
+	concepts.Process(c)
+	concepts.Process(false)
+
+
 }
