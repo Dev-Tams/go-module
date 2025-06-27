@@ -142,5 +142,11 @@ func main() {
 	concepts.Process(c)
 	concepts.Process(false)
 
+	concepts.LogAnything("Hello there!")
+	concepts.LogAnything(43)
+	concepts.LogAnything(concepts.UserLog{Name: "Tami"})
+	concepts.LogAnything(concepts.ErrorLog{Code: 404, Message: "Not found"})
+	concepts.LogAnything(123.456)
+
 
 }
