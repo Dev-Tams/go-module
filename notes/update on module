@@ -1,6 +1,12 @@
-Practice with interface{} and type assertions/switches
+methods
 
-Do a polymorphic "Animal" system
+Pointers and pointer receivers
+
+Struct embedding
+
+Interfaces and interface usage
+
+Practice with interface{} and type assertions/switches
 
 Deep dive into struct embedding & method inheritance
 

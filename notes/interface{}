@@ -33,9 +33,6 @@ box = MyCustomThing{}
 Because sometimes you don’t know what type you’ll get. 
 You just want to accept anything, like a “catch-all” function:
 
-go
-Copy
-Edit
 func LogAnything(data any) {
 	// look inside the magic box and figure out what it is
 }

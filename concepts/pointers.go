@@ -47,7 +47,7 @@ func(c *Counter) Show() string{
 } 
 
 func(c *Counter) Multiply(n int) string{
-	c.Value = n
+	c.Value *= n
 	return fmt.Sprintf("Current count multiplied by %v is: %v", n, c.Value)
 } 
 
