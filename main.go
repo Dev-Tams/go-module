@@ -162,4 +162,11 @@ func main() {
 
 	fmt.Println("Log entries appended to", filename)
 
+	num, err := concepts.CheckPositive(-5)
+		if err != nil{
+			fmt.Println("Error:", err)
+		}else{
+			fmt.Println("Valid num:", num)
+		}
+
 }

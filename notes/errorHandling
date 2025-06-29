@@ -1,0 +1,37 @@
+Go Errors
+What is Error Handling in Go?
+In Go, errors are values. Instead of using exceptions like other languages,
+ Go returns error values from functions. 
+ You then check those values to handle problems gracefully.
+
+ Why is this important?
+It prevents your program from crashing unexpectedly.
+
+It lets you respond to different failure cases in different ways.
+
+
+result, err := SomeFunction()
+if err != nil {
+    // Handle the error
+} else {
+    // Use the result
+}
+
+type error interface {
+    Error() string
+}
+So, any type that has an Error() string method satisfies the error interface.
+
+
+You Can Create Your Own Error
+You can use the built-in errors package to create errors:
+
+import "errors"
+
+<!-- The New function creates errors whose only content is a text message. -->
+var err = errors.New("something went wrong")
+
+Or use fmt.Errorf() to add more detail:
+
+err := fmt.Errorf("error with input %v", value)
+
