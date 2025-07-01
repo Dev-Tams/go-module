@@ -169,4 +169,18 @@ func main() {
 			fmt.Println("Valid num:", num)
 		}
 
+	email, err := concepts.CheckEmail("tamialemu@mail.com")
+	if err != nil {
+		fmt.Println("error:", err)
+	}else{
+		fmt.Printf("%v is a valid email\n", email)
+	}
+
+
+	age, err := concepts.CheckAge(12)
+	if err != nil{
+		fmt.Println("error:", err)
+	}else{
+		fmt.Printf("age %v is allowed\n", age)
+	}
 }
