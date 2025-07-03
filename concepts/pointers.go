@@ -46,9 +46,12 @@ func(c *Counter) Show() string{
 	return fmt.Sprintf("Current count is:%v", c.Value)
 } 
 
-func(c *Counter) Multiply(n int) string{
+func(c *Counter) Multiply(n int) (string, error){
 	c.Value *= n
-	return fmt.Sprintf("Current count multiplied by %v is: %v", n, c.Value)
+	if n == 0 {
+		return "", fmt.Errorf("cannot pass O as value")
+	}
+	return fmt.Sprintf("Current count multiplied by %v is: %v", n, c.Value), nil
 } 
 
 

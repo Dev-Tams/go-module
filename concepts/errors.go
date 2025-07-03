@@ -29,9 +29,8 @@ func CheckEmail(e string) (string, error) {
 
 
 func CheckAge(age int) (int, error){
-
 	if age < 13{
-		return 0, fmt.Errorf("Age %d is not eligible. Must be at least 13", age)
+		return 0, fmt.Errorf(" Age %d is not eligible. Must be at least 13", age)
 	}else{
 		return age, nil
 	}

@@ -52,14 +52,20 @@ func main() {
 	// fmt.Println(B.Hbd())
 	// fmt.Println(B.Hbd())
 
-	// cv := concepts.Counter{Value: 5}
+	cv := concepts.Counter{Value: 5}
 	// fmt.Println(cv.Show())
 	// cv.Increment()
 	// cv.Increment()
 	// fmt.Println(cv.Show())
 	// cv.Decrement()
 	// fmt.Println(cv.Show())
-	// fmt.Println(cv.Multiply(3))
+	res, err := cv.Multiply(0)
+	if err != nil{
+		fmt.Println(err)
+	}else{
+		fmt.Println(res)
+	}
+	// fmt.Println(cv.Multiply(-1))
 	// fmt.Println(cv.Show())
 	// fmt.Println(cv.Reset())
 	// fmt.Println(cv.Show())
