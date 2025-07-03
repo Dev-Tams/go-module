@@ -189,4 +189,18 @@ func main() {
 	}else{
 		fmt.Printf("age %v is allowed\n", age)
 	}
+
+	
+
+	username, err := concepts.CheckLogin("Tami", "")
+	if err != nil {
+		if loginErr, ok := err.(concepts.LoginError); ok {
+			fmt.Println("Custom error caught:", loginErr)
+		} else {
+			fmt.Println("Generic error:", err)
+		}
+	} else {
+		fmt.Println("Successfully logged in as", username)
+	}
+
 }

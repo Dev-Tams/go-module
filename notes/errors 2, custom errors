@@ -1,0 +1,49 @@
+Go custom errors
+// custom errors, panic/recover, or file-based error handling.
+What Are Custom Errors?
+Sometimes, a plain fmt.Errorf(...) isn’t expressive enough. You might want to:
+
+Add structured data to your error (like an error code or field name)
+
+Be able to check the type of error using type assertion or errors.As()
+
+Return richer, more contextual messages from packages/modules
+
+Step-by-Step: Creating and Using Custom Errors
+1. Define a struct that implements the error interface
+
+type AgeError struct {
+	Age int
+	Msg string
+}
+
+
+2. Use it in a function
+
+func (e AgeError) Error() string {
+	return fmt.Sprintf("AgeError: age %d - %s", e.Age, e.Msg)
+}
+
+func ValidateAge(age int) (int, error) {
+	if age < 18 {
+		return 0, AgeError{Age: age, Msg: "must be 18 or older"}
+	}
+	return age, nil
+}
+
+3. Handle it in main using type assertion
+
+//it was handled using type assertion
+age, err := ValidateAge(16)
+if err != nil {
+	//checks if theres a specific error from the struct and return error
+	if ageErr, ok := err.(AgeError); ok {
+		fmt.Println("Custom error caught:", ageErr)
+	} else {
+		//prints generic error if no error from struct
+		fmt.Println("General error:", err)
+	}
+} else {
+	//returns ok if clear
+	fmt.Println("Age is valid:", age)
+}
