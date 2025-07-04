@@ -192,7 +192,7 @@ func main() {
 
 	
 
-	username, err := concepts.CheckLogin("Tami", "")
+	username, err := concepts.CheckLogin("Tami", "password123")
 	if err != nil {
 		if loginErr, ok := err.(concepts.LoginError); ok {
 			fmt.Println("Custom error caught:", loginErr)
@@ -201,6 +201,17 @@ func main() {
 		}
 	} else {
 		fmt.Println("Successfully logged in as", username)
+	}
+
+	usernames, err := concepts.Inactive("Tami", "12") 
+	if err != nil{
+		if inactiveErr, ok := err.(concepts.LoginError); ok{
+			fmt.Println("Error:", inactiveErr)
+		}else{
+			fmt.Println("Generic error:", err)
+		}
+	}else{
+		fmt.Println("user", usernames, "is active")
 	}
 
 }

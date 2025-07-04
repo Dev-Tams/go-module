@@ -1,6 +1,9 @@
 package concepts
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 // Create a LoginError struct with fields like Username, Reason
 
@@ -24,6 +27,15 @@ func CheckLogin(username, password string) (string, error){
 	}
 	return username, nil
 }
+
+func Inactive(username, days string) (string, error){
+	  x, _ := strconv.Atoi(days)
+	 if x > 30 {
+		return "", LoginError{Username: username, Reason: "User has been inactive, please contact support"}
+	 }
+	 return username, nil
+}
+
 
 
 
