@@ -1,0 +1,79 @@
+Awesome! Let’s build on custom and generic error handling by adding more real-world scenarios.
+ Here’s what we’ll cover next in sequence:
+
+ ✅ 1. Multiple Custom Error Types
+
+ ✅ 2. Error Wrapping (`fmt.Errorf` with `%w`)
+
+This is useful when one error causes another (e.g. file open failure due to permission denied).
+
+ ✅ 3. Practical Example: User Registration with error validation (age, email, username, password strength).
+
+---
+
+ 🔹 Step 1: Multiple Custom Errors
+
+ 👇 Define multiple error types:
+
+
+type ValidationError struct {
+	Field   string
+	Message string
+}
+
+
+type ServerError struct {
+	Code    int
+	Message string
+}
+
+func (v ValidationError) Error() string {
+	return fmt.Sprintf("Invalid field [%s]: %s", v.Field, v.Message)
+}
+
+func (s ServerError) Error() string {
+	return fmt.Sprintf("Server error %d: %s", s.Code, s.Message)
+}
+
+
+ 🔹 Step 2: Use `error` Type Assertion with Switch
+
+func HandleError(err error) {
+	switch e := err.(type) {
+	case ValidationError:
+		fmt.Println("Validation issue:", e)
+	case ServerError:
+		fmt.Println("Server issue:", e)
+	default:
+		fmt.Println("Generic issue:", err)
+	}
+}
+
+🔹 Step 3: Simulate a Registration
+
+
+func RegisterUser(username, email string, age int) error {
+	if username == "" {
+		return ValidationError{"username", "cannot be empty"}
+	}
+	if !strings.Contains(email, "@") {
+		return ValidationError{"email", "must be a valid email"}
+	}
+	if age < 18 {
+		return ValidationError{"age", "must be 18 or older"}
+	}
+	if username == "admin" {
+		return ServerError{500, "username 'admin' is reserved"}
+	}
+	return nil
+}
+
+
+And in  `main()`:
+
+err := RegisterUser("admin", "tamigmail.com", 17)
+if err != nil {
+	HandleError(err)
+} else {
+	fmt.Println("Registration successful")
+}
