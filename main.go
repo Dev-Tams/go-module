@@ -214,4 +214,11 @@ func main() {
 		fmt.Println("user", usernames, "is active")
 	}
 
+
+	status, err := concepts.PlaceOrder(0, "Chita Avanue", "Bread", "2:30")
+	if err != nil{
+		concepts.HandleError(err)
+	}else{
+		fmt.Println(status)
+	}
 }
