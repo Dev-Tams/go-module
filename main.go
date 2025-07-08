@@ -60,9 +60,9 @@ func main() {
 	// cv.Decrement()
 	// fmt.Println(cv.Show())
 	res, err := cv.Multiply(0)
-	if err != nil{
+	if err != nil {
 		fmt.Println(err)
-	}else{
+	} else {
 		fmt.Println(res)
 	}
 	// fmt.Println(cv.Multiply(-1))
@@ -150,7 +150,7 @@ func main() {
 	logbook = append(logbook, concepts.LogAnything(123.456))
 
 	filename := "logbook.txt"
-	
+
 	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Println("Error writing to file:", err)
@@ -169,28 +169,25 @@ func main() {
 	fmt.Println("Log entries appended to", filename)
 
 	num, err := concepts.CheckPositive(-5)
-		if err != nil{
-			fmt.Println("Error:", err)
-		}else{
-			fmt.Println("Valid num:", num)
-		}
+	if err != nil {
+		fmt.Println("Error:", err)
+	} else {
+		fmt.Println("Valid num:", num)
+	}
 
 	email, err := concepts.CheckEmail("tamialemu@mail.com")
 	if err != nil {
 		fmt.Println("error:", err)
-	}else{
+	} else {
 		fmt.Printf("%v is a valid email\n", email)
 	}
 
-
 	age, err := concepts.CheckAge(12)
-	if err != nil{
+	if err != nil {
 		fmt.Println("error:", err)
-	}else{
+	} else {
 		fmt.Printf("age %v is allowed\n", age)
 	}
-
-	
 
 	username, err := concepts.CheckLogin("Tami", "password123")
 	if err != nil {
@@ -203,22 +200,21 @@ func main() {
 		fmt.Println("Successfully logged in as", username)
 	}
 
-	usernames, err := concepts.Inactive("Tami", "12") 
-	if err != nil{
-		if inactiveErr, ok := err.(concepts.LoginError); ok{
+	usernames, err := concepts.Inactive("Tami", "12")
+	if err != nil {
+		if inactiveErr, ok := err.(concepts.LoginError); ok {
 			fmt.Println("Error:", inactiveErr)
-		}else{
+		} else {
 			fmt.Println("Generic error:", err)
 		}
-	}else{
+	} else {
 		fmt.Println("user", usernames, "is active")
 	}
 
-
-	status, err := concepts.PlaceOrder(0, "Chita Avanue", "Bread", "2:30")
-	if err != nil{
+	status, err := concepts.PlaceOrder(4, "Chita Avanue", "Bread", "18:30")
+	if err != nil {
 		concepts.HandleError(err)
-	}else{
+	} else {
 		fmt.Println(status)
 	}
 }
