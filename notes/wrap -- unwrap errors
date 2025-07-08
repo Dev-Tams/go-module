@@ -1,0 +1,53 @@
+Learn to wrap, unwrap, and check errors properly using:
+fmt.Errorf("...: %w", err) for wrapping
+
+errors.Is() to check if a specific error occurred
+
+errors.As() to access the underlying custom error type
+
+
+Step-by-Step Plan:
+Step 1: Define a custom error
+
+type ItemNotFound struct {
+	Item string
+}
+
+func (e ItemNotFound) Error() string {
+	return fmt.Sprintf("The item '%s' was not found", e.Item)
+}
+ 
+
+Step 2: Simulate a lookup function that wraps an error
+func LookupItem(name string) error {
+	if name != "Bread" {
+		return fmt.Errorf("lookup failed: %w", ItemNotFound{Item: name})
+	}
+	return nil
+}
+
+
+Step 3: Use errors.Is() and errors.As() in the caller
+
+func HandleLookup(name string) {
+	err := LookupItem(name)
+	if err != nil {
+		// Check by type
+		var notFound ItemNotFound
+		if errors.As(err, &notFound) {
+			fmt.Println("Custom handler for not found:", notFound.Item)
+			return
+		}
+
+		// Check by value
+		if errors.Is(err, ItemNotFound{Item: name}) {
+			fmt.Println("Item not found (matched by value)")
+			return
+		}
+
+		// Generic error fallback
+		fmt.Println("General error:", err)
+	} else {
+		fmt.Println("Item found:", name)
+	}
+}
