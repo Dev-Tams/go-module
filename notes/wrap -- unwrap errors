@@ -51,3 +51,63 @@ func HandleLookup(name string) {
 		fmt.Println("Item found:", name)
 	}
 }
+
+
+Why use wrapping, unwrapping, `errors.Is()` and `errors.As()`?
+
+These are powerful tools in Go for advanced error handling 
+when you’re building larger applications or libraries.
+
+
+
+Real-World Use Cases
+
+ 1. Layered Error Context (e.g., API or DB systems)
+
+Suppose a request goes through:
+
+ Authentication → DB lookup → Business logic → Response
+
+If the DB lookup fails, you can wrap that error with more context at each layer.
+
+
+err := db.LookupUser("Tami")
+if err != nil {
+	return fmt.Errorf("auth failed: %w", err)
+}
+
+
+Later on, you can inspect the original cause (like `UserNotFound`) even after it’s been wrapped several times.
+
+ 2. Custom Action Based on Error Type
+
+Let’s say:
+
+ You want to retry if the error is a `TimeoutError`
+ But alert support if it’s a `DBCorruptionError`
+
+Using `errors.As()`, you can write logic that depends on the specific type:
+
+var timeout TimeoutError
+if errors.As(err, &timeout) {
+	retry()
+}
+
+ 3. Logging or UI Messages
+
+You can unwrap and log different errors:
+
+ "Item not found"
+ "Internal server error"
+ "Network timeout"
+
+Each one gets a clean user-facing message but still carries the full context under the hood for debugging.
+
+
+ Summary
+
+| Feature                | Use It When...                                              |
+| ---------------------- | ----------------------------------------------------------- |
+| `fmt.Errorf(...%w...)` | You want to add context while preserving original error |
+| `errors.Is()`          | You want to check for specific errors up the chain      |
+| `errors.As()`          | You want to extract and act on custom error data        |
