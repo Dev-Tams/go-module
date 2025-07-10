@@ -223,7 +223,7 @@ func main() {
 	if err != nil {
 		var tErr concepts.TransactionError
 		if errors.As(err, &tErr) {
-			fmt.Println("Handle specifically:", tErr.Reason)
+			fmt.Println("Handle specifically:", tErr)
 		} else {
 			fmt.Println("Generic error:", err)
 		}
@@ -231,4 +231,15 @@ func main() {
 		fmt.Println(result)
 	}
 
+	cart, err := concepts.AddToCart(9009090.0)
+		if err != nil{
+			var invErr concepts.InventoryError
+			if errors.As(err, &invErr) {
+				fmt.Println("Custom Inventory Error:", invErr)
+			}else{
+				fmt.Println("Generic error:", err)
+			}
+		}else{
+			fmt.Print(cart)
+		}
 }

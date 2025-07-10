@@ -41,15 +41,16 @@ func (cw CryptoWallet) Pay(amount float64) string {
 }
 
 func (t TransactionError) Error() string{
-	return fmt.Sprintf("card declined: %s", t.Reason)
+	return fmt.Sprintf("card declined: %v", t.Reason)
 }
 
 func ProcessPayment(p PaymentMethod, amount float64) (string, error) {
 	if amount == 0.0{
-		return "",  fmt.Errorf("payment failed: %w", TransactionError{Reason: "Insufficient funds"})
+		return "",   TransactionError{Reason: "Insufficient funds"}
 
+	}else{
+		return fmt.Sprintln(p.Pay(amount)), nil
 	}
-	return fmt.Sprintln(p.Pay(amount)), nil
 }
 
 
