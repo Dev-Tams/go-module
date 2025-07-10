@@ -22,6 +22,11 @@ type PaymentMethods struct {
 	Amount float64
 }
 
+type TransactionError  struct{
+	Reason string
+}
+
+
 func (cc CreditCard) Pay(amount float64) string {
 	return fmt.Sprintf("$%v was paid by %v with credit card ", amount, cc.Name)
 }
@@ -35,7 +40,19 @@ func (cw CryptoWallet) Pay(amount float64) string {
 	return fmt.Sprintf("$%v was paid through %v address ", amount, cw.Address)
 }
 
-func ProcessPayment(p PaymentMethod, amount float64){
-	fmt.Println(p.Pay(amount))
+func (t TransactionError) Error() string{
+	return fmt.Sprintf("card declined: %s", t.Reason)
 }
+
+func ProcessPayment(p PaymentMethod, amount float64) (string, error) {
+	if amount == 0.0{
+		return "",  fmt.Errorf("payment failed: %w", TransactionError{Reason: "Insufficient funds"})
+
+	}
+	return fmt.Sprintln(p.Pay(amount)), nil
+}
+
+
+
+
 

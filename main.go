@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -217,4 +218,17 @@ func main() {
 	} else {
 		fmt.Println(status)
 	}
+
+	result, err := concepts.ProcessPayment(concepts.CreditCard{Name: "Tami"}, 0)
+	if err != nil {
+		var tErr concepts.TransactionError
+		if errors.As(err, &tErr) {
+			fmt.Println("Handle specifically:", tErr.Reason)
+		} else {
+			fmt.Println("Generic error:", err)
+		}
+	}else{
+		fmt.Println(result)
+	}
+
 }
