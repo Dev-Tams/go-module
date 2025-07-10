@@ -231,7 +231,7 @@ func main() {
 		fmt.Println(result)
 	}
 
-	cart, err := concepts.AddToCart(9009090.0)
+	cart, err := concepts.AddToCart("", 189006, 45)
 		if err != nil{
 			var invErr concepts.InventoryError
 			if errors.As(err, &invErr) {
