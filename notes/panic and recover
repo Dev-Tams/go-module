@@ -1,0 +1,46 @@
+Go
+ What is panic?
+
+ panic immediately stops the normal flow of your program.
+ It's like throwing an exception: the function panics, and control goes up the call stack.
+ Used for unrecoverable errors (e.g., out-of-bounds access, nil dereference)
+ 
+ ```
+panic("Something went terribly wrong!")
+
+```
+---
+What is recover?
+
+ recover is used inside a defer function to catch the panic and prevent your program from crashing.
+ It returns the panic value if the function is panicking, or nil otherwise.
+
+func safeFunction() {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered from panic:", r)
+		}
+	}()
+	panic("Uh oh")
+}
+
+
+---
+When Should You Use panic/recover?
+
+✅ Use it when:
+
+ You're dealing with critical failure where continuing makes no sense.
+ You’re building robust libraries and want to catch internal panics safely.
+
+
+ Avoid for normal error handling — use error instead.
+
+
+You can write a function that:
+
+ Panics if a number is negative.
+ Recovers and prints a warning.
+
+
+

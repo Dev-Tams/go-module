@@ -15,7 +15,7 @@ func (i InventoryError) Error() string {
 	return fmt.Sprintf("failed to add item: %v", i.Reason)
 }
 func (e EmailValidationError) Error() string {
-	return fmt.Sprintf("Invalid email address: %s", e.Email)
+	return fmt.Sprintf("Error with mail: %s", e.Email)
 }
 
 func AddToCart(email string, item, qty int) (string, error){

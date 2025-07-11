@@ -124,6 +124,9 @@ func main() {
 		refresh.SendLog(p.Logger, p.Message)
 	}
 
+
+	//interface{} i.e any
+
 	var a any = "Tami"
 
 	s, ok := a.(string)
@@ -142,6 +145,7 @@ func main() {
 	concepts.Process(c)
 	concepts.Process(false)
 
+	//appending any
 	var logbook []string
 
 	logbook = append(logbook, concepts.LogAnything("Hello there!"))
@@ -168,6 +172,9 @@ func main() {
 	}
 
 	fmt.Println("Log entries appended to", filename)
+
+
+	//errors
 
 	num, err := concepts.CheckPositive(-5)
 	if err != nil {
@@ -231,15 +238,25 @@ func main() {
 		fmt.Println(result)
 	}
 
-	cart, err := concepts.AddToCart("", 189006, 45)
+	cart, err := concepts.AddToCart("tamiil.com", 0, 25)
 		if err != nil{
-			var invErr concepts.InventoryError
+			var (
+				invErr concepts.InventoryError
+				emailErr concepts.EmailValidationError
+			)
 			if errors.As(err, &invErr) {
 				fmt.Println("Custom Inventory Error:", invErr)
+			}else if errors.As(err, &emailErr){
+				fmt.Println("Email Error:", emailErr)
 			}else{
 				fmt.Println("Generic error:", err)
 			}
 		}else{
 			fmt.Print(cart)
 		}
+
+		//panic
+		concepts.Negative(10)
+		concepts.Negative(-5)
+		concepts.Negative(10)
 }

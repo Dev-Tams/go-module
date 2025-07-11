@@ -12,4 +12,23 @@ Deep dive into struct embedding & method inheritance
 
 Jump into Go error handling (errors.New, custom errors, wrapping, etc.)
 
+
+// Wrapping errors with fmt.Errorf("...: %w", err)
+
+// Unwrapping and checking nested errors with errors.Is() or errors.As()
+
+// Creating a chain of responsibility for layered error contexts (great for web apps or complex APIs)
+
+
+//  New Concept — Struct Embedding & Composition
+// Learn how to:
+
+// Reuse logic using embedded structs
+
+// Simulate inheritance behavior
+
+// Compose multiple behaviors into a single struct using interfaces + embedding
+
+
+
 Start Go concurrency basics (goroutines + channels)
