@@ -259,4 +259,22 @@ func main() {
 		concepts.Negative(10)
 		concepts.Negative(-5)
 		concepts.Negative(10)
+
+		admin := concepts.Admin{
+		User: concepts.User{
+			Name:  "Tami",
+			Email: "tami@example.com",
+		},
+		Privileges: []string{"read", "write", "delete"},
+		}
+		
+		fmt.Println("Admin Name:", admin.Name)           
+		fmt.Println("Admin Email:", admin.Email)
+		fmt.Println("Privileges:", admin.Privileges)
+
+		fmt.Println(admin.Greet())
+		fmt.Println(admin.HasPrivi("delete"))
+
+		concepts.CheckAdmin(admin.User)
+
 }
