@@ -23,7 +23,7 @@ type Car struct{
 }
 
 type Person struct{
-	Name, Career string
+	Name, Career, Email string
 	Age int
 }
 

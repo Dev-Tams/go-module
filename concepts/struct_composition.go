@@ -9,14 +9,22 @@ type RoleChecker interface{
 	isAdmin() bool
 }
 
+
 type User struct {
-	Name, Email string
+	 AcountId string
+	 Person
 }
 
 type Admin struct {
 	Privileges []string
 	User
 }
+
+
+
+// Create a method like func (a Admin) HasPrivilege(p string) bool
+
+// Create another method like func (u User) FullContact() string returning name + email.
 
 
 func (u User) Greet() string {
@@ -33,6 +41,9 @@ func (a Admin) HasPrivi(priv string) bool{
 	// return false
 }
 
+func (u User) FullContact() string{
+	return fmt.Sprintf("%v : %v", u.Name, u.Email)
+}
 
 func (a Admin) isAdmin() bool{
 	return true

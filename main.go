@@ -183,7 +183,7 @@ func main() {
 		fmt.Println("Valid num:", num)
 	}
 
-	email, err := concepts.CheckEmail("tamialemu@mail.com")
+	email, err := concepts.CheckEmail("tami@mail.com")
 	if err != nil {
 		fmt.Println("error:", err)
 	} else {
@@ -262,19 +262,35 @@ func main() {
 
 		admin := concepts.Admin{
 		User: concepts.User{
-			Name:  "Tami",
-			Email: "tami@example.com",
+			AcountId: "2",
+			Person: concepts.Person{
+				Name: "Tami",
+				Email: "tami@mail.com",
+			},
 		},
 		Privileges: []string{"read", "write", "delete"},
 		}
+
+
+		user := concepts.User{
+			AcountId: "4",
+			Person: concepts.Person{
+				Name: "Tammy",
+				Email: "tammy@mail.com",
+			},
+		}
+		
+
 		
 		fmt.Println("Admin Name:", admin.Name)           
 		fmt.Println("Admin Email:", admin.Email)
+		fmt.Println("Admin ID:", admin.AcountId)
 		fmt.Println("Privileges:", admin.Privileges)
 
 		fmt.Println(admin.Greet())
+		fmt.Println(user.FullContact())
 		fmt.Println(admin.HasPrivi("delete"))
-
-		concepts.CheckAdmin(admin.User)
+		concepts.CheckAdmin(user)
+		concepts.CheckAdmin(admin)
 
 }
