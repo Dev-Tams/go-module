@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
+	// "go/scanner"
 	"os"
 
 	"github.com/Dev-Tams/go-module/concepts"
@@ -292,5 +294,28 @@ func main() {
 		fmt.Println(admin.HasPrivi("delete"))
 		concepts.CheckAdmin(user)
 		concepts.CheckAdmin(admin)
+
+
+		//openes a file
+		file, err := os.Open("logbook.txt")
+		if err != nil{
+			fmt.Println("error opening file", err)
+		}else{
+			fmt.Println("File opened successfully!")
+		}
+		defer file.Close()
+
+		//reads the file by line
+		scanner := bufio.NewScanner(file)
+
+		for scanner.Scan(){
+			line := scanner.Text()
+			fmt.Println("line", line)
+		}
+
+		if  err := scanner.Err(); err != nil{
+			fmt.Println("error with reading", err)
+		}
+
 
 }
