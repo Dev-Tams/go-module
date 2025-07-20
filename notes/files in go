@@ -1,0 +1,71 @@
+What Is File Handling?
+File handling means interacting with files in your program. This includes:
+
+Creating a file, Reading from a file, Writing to a file, Appending to a file and Deleting a file
+
+
+
+File handling is useful when you want to:
+
+Save user data (e.g. logs, settings, reports)
+
+Read configurations from a file
+
+Store messages or output
+
+Build real-world applications (e.g. note apps, editors, logs)
+
+
+Go has a package for this: os
+You’ll also often use: io → for reading data, bufio → for efficient reading and the
+os → for creating, opening, writing, deleting files
+errors → for handling file errors
+
+
+
+⚙️ Common File Modes in Go:
+
+| Action     | Function               |
+| ---------- | ---------------------- |
+| Create     | `os.Create()`          |
+| Open       | `os.Open()`            |
+| Open+Write | `os.OpenFile()`        |
+| Read       | `file.Read()`          |
+| Write      | `file.Write()`         |
+| Append     | Use OpenFile with flag |
+| Close      | `file.Close()`         |
+
+
+
+
+
+
+Step 1: Opening a File
+In Go, to work with files, we use the os package.
+
+Here's how to open an existing file for reading:
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func main() {
+	file, err := os.Open("example.txt") // open file in read-only mode
+	if err != nil {
+		fmt.Println("Error opening file:", err)
+		return
+	}
+	defer file.Close()
+
+	fmt.Println("File opened successfully!")
+}
+
+ What’s happening here?
+
+os.Open("example.txt") opens a file in read-only mode.
+
+It returns two things: file (a pointer to the file) and err (an error if anything goes wrong).
+
+defer file.Close() ensures the file is closed when the function ends.
