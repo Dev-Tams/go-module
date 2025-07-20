@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bufio"
+	// "bufio"
 	"errors"
 	"fmt"
 	// "go/scanner"
@@ -306,16 +306,52 @@ func main() {
 		defer file.Close()
 
 		//reads the file by line
-		scanner := bufio.NewScanner(file)
+		// scanner := bufio.NewScanner(file)
 
-		for scanner.Scan(){
-			line := scanner.Text()
-			fmt.Println("line", line)
+		// for scanner.Scan(){
+		// 	line := scanner.Text()
+		// 	fmt.Println("line", line)
+		// }
+
+		// if  err := scanner.Err(); err != nil{
+		// 	fmt.Println("error with reading", err)
+		// }
+
+		//create a new file
+
+		newfile, err := os.Create("notes/newfile")
+		if err != nil{
+			fmt.Println("Error creating new file", err)
+		}else{
+			fmt.Println("file created")
 		}
 
-		if  err := scanner.Err(); err != nil{
-			fmt.Println("error with reading", err)
+		defer newfile.Close()
+
+		//write to a file
+
+		//Additionally you cant write to an existing file due to permission errors, you can add by appending
+
+		_, err = newfile.WriteString("Hello, there!\n writing to a new file ")
+		if err != nil{
+			fmt.Println("error writing to a new file", err)
+			return
+		}else{
+			fmt.Println("file written successfully")
 		}
 
+		
+
+		//appending to the existing file tied to the file var
+		file, _ = os.OpenFile("logbook.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		defer file.Close()
+
+		_, err = file.WriteString("Hello, there!\n Appending to an existing file ")
+		if err != nil{
+			fmt.Println("error appending to file", err)
+			return
+		}else{
+			fmt.Println("Line appended successfully.")
+		}
 
 }

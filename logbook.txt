@@ -1,0 +1,7 @@
+[STRING] Hello there!
+[NUMBER] 43
+[concepts.UserLog] User: Tami
+[concepts.ErrorLog] Error 404: Not found
+[UNKNOWN TYPE] 123.456
+Hello, there!
+ Appending to an existing file 
