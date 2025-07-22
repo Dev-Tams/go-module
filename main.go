@@ -442,5 +442,24 @@ func main() {
 		}
 		fmt.Println("csv written ")
 
+		cfile, err = os.Open("Cfile.csv")
+		if err != nil{
+			fmt.Println("Error opening csv file")
+			return
+		}else{
+			fmt.Println(" reading csv file")
+		}
+		defer cfile.Close()
+
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		fmt.Println("Error reading CSV:", err)
+		return
+	}
+
+	for i, record := range records {
+		fmt.Printf("Row %d: %v\n", i, record)
+	}
 
 }
