@@ -2,14 +2,27 @@ package main
 
 import (
 	// "bufio"
+	"encoding/csv"
+	"encoding/json"
 	"errors"
 	"fmt"
+
 	// "go/scanner"
 	"os"
 
 	"github.com/Dev-Tams/go-module/concepts"
 	"github.com/Dev-Tams/go-module/refresh"
 )
+
+
+var records = [][]string{
+	{"Name", "Sex", "Email"},
+	{"Tami", "f", "tami@mail.com"},
+	{"Tonye", "f", "tonye@mail.com"},
+	{"Tony", "m", "tony@mail.com"},
+	{"Tommy", "m", "tommy@mail.com"},
+	{"T", "f", "t@mail.com"},
+}
 
 func main() {
 
@@ -296,7 +309,7 @@ func main() {
 		concepts.CheckAdmin(admin)
 
 
-		//openes a file
+		//opens a file
 		file, err := os.Open("logbook.txt")
 		if err != nil{
 			fmt.Println("error opening file", err)
@@ -330,17 +343,17 @@ func main() {
 
 		//write to a file
 
-		//Additionally you cant write to an existing file due to permission errors, you can add by appending
-
+		
 		_, err = newfile.WriteString("Hello, there!\n writing to a new file ")
 		if err != nil{
 			fmt.Println("error writing to a new file", err)
-			return
-		}else{
-			fmt.Println("file written successfully")
-		}
-
-		
+				return
+			}else{
+				fmt.Println("file written successfully")
+			}
+			
+			
+		//Additionally you cant write to an existing file due to permission errors, you can add by appending
 
 		//appending to the existing file tied to the file var
 		file, _ = os.OpenFile("logbook.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
@@ -353,5 +366,81 @@ func main() {
 		}else{
 			fmt.Println("Line appended successfully.")
 		}
+
+		rfile, err := os.Create("notes/refresh")
+		if err != nil{
+			fmt.Println(" error creating file", err)
+			return 
+		}else{
+			fmt.Println("file created" , rfile)
+		}
+
+		defer rfile.Close()
+
+
+		//writing to a json file
+
+		jfile, err := os.Create("user.json")
+
+		if err == nil{
+			fmt.Println("new json file created")
+		}else{
+			fmt.Println("error creating json file", err)
+			return
+		}
+
+		defer jfile.Close()
+
+		encoder := json.NewEncoder(jfile)
+
+		err = encoder.Encode(user)
+		if err != nil{
+			fmt.Println(" error econding json", err)
+			return
+		}else{
+			fmt.Println("Json written to file")
+		}
+
+		//reading from a json file
+		jfile, err = os.Open("user.json")
+		if err != nil{
+			fmt.Println("Error opening json file")
+			return
+		}else{
+			fmt.Println(" reading json file")
+		}
+		defer jfile.Close()
+
+		//decode
+
+		decode := json.NewDecoder(jfile)
+		err = decode.Decode(&user)
+		if err == nil{
+			fmt.Printf("User loaded from JSON: %+v\n, user", user)
+		}else{
+			fmt.Println(" Error loading json file")
+		}
+
+		cfile, err := os.Create("Cfile.csv")
+		if err != nil{
+			fmt.Println(" Errror creating csv file", err)
+			return
+		}else{
+			fmt.Println(" CSV file created")
+		}
+		defer cfile.Close()
+
+		csvwrite := csv.NewWriter(cfile)
+		defer csvwrite.Flush()
+
+		for _, i := range records{
+			err := csvwrite.Write(i)
+			if err != nil{
+				fmt.Println(" Failed to write csv record")
+				return
+			}
+		}
+		fmt.Println("csv written ")
+
 
 }
