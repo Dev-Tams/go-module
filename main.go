@@ -331,7 +331,6 @@ func main() {
 		// }
 
 		//create a new file
-
 		newfile, err := os.Create("notes/newfile")
 		if err != nil{
 			fmt.Println("Error creating new file", err)
@@ -380,7 +379,7 @@ func main() {
 
 		//writing to a json file
 
-		jfile, err := os.Create("user.json")
+		jfile, err := os.Create("user")
 
 		if err == nil{
 			fmt.Println("new json file created")
