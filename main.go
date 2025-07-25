@@ -421,6 +421,9 @@ func main() {
 			fmt.Println(" Error loading json file")
 		}
 
+
+		//writing a csv
+
 		cfile, err := os.Create("Cfile.csv")
 		if err != nil{
 			fmt.Println(" Errror creating csv file", err)
@@ -431,8 +434,7 @@ func main() {
 		defer cfile.Close()
 
 		csvwrite := csv.NewWriter(cfile)
-		defer csvwrite.Flush()
-
+		
 		for _, i := range records{
 			err := csvwrite.Write(i)
 			if err != nil{
@@ -440,9 +442,11 @@ func main() {
 				return
 			}
 		}
+		defer csvwrite.Flush()
+		cfile.Close()
 		fmt.Println("csv written ")
 
-		cfile, err = os.Open("Cfile.csv")
+		cfile, err = os.OpenFile("Cfile.csv", os.O_RDONLY| os.O_WRONLY, 0644)
 		if err != nil{
 			fmt.Println("Error opening csv file")
 			return
@@ -451,7 +455,7 @@ func main() {
 		}
 		defer cfile.Close()
 
-	reader := csv.NewReader(file)
+	reader := csv.NewReader(cfile)
 	records, err := reader.ReadAll()
 	if err != nil {
 		fmt.Println("Error reading CSV:", err)
