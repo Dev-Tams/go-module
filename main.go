@@ -331,6 +331,7 @@ func main() {
 		// }
 
 		//create a new file
+
 		newfile, err := os.Create("notes/newfile")
 		if err != nil{
 			fmt.Println("Error creating new file", err)
@@ -378,8 +379,8 @@ func main() {
 
 
 		//writing to a json file
-
-		jfile, err := os.Create("user")
+		
+		jfile, err := os.Create("user.json")
 
 		if err == nil{
 			fmt.Println("new json file created")
@@ -453,16 +454,15 @@ func main() {
 			fmt.Println(" reading csv file")
 		}
 		defer cfile.Close()
-
-	reader := csv.NewReader(cfile)
-	records, err := reader.ReadAll()
-	if err != nil {
-		fmt.Println("Error reading CSV:", err)
-		return
-	}
-
-	for i, record := range records {
+		
+		reader := csv.NewReader(cfile)
+		records, err := reader.ReadAll()
+		for i, record := range records {
+		if err != nil {
+			fmt.Println("Error reading CSV:", err)
+			return
+		}
 		fmt.Printf("Row %d: %v\n", i, record)
+		
 	}
-
 }
