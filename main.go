@@ -3,7 +3,6 @@ package main
 import (
 	// "bufio"
 	"encoding/csv"
-	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -380,47 +379,33 @@ func main() {
 
 		//writing to a json file
 		
-		jfile, err := os.Create("user.json")
+		// jfile, err := os.Create("user.json")
 
-		if err == nil{
-			fmt.Println("new json file created")
-		}else{
-			fmt.Println("error creating json file", err)
-			return
-		}
+		// if err == nil{
+		// 	fmt.Println("new json file created")
+		// }else{
+		// 	fmt.Println("error creating json file", err)
+		// 	return
+		// }
 
-		defer jfile.Close()
+		// defer jfile.Close()
 
-		encoder := json.NewEncoder(jfile)
+		// encoder := json.NewEncoder(jfile)
 
-		err = encoder.Encode(user)
+		// err = encoder.Encode(user)
+		// if err != nil{
+		// 	fmt.Println(" error econding json", err)
+		// 	return
+		// }else{
+		// 	fmt.Println("Json written to file")
+		// }
+
+		//write and read from json
+		jfile, err := concepts.WriteToJson("user.json", user)
+		concepts.ReadFromJson(jfile, user)
 		if err != nil{
-			fmt.Println(" error econding json", err)
-			return
-		}else{
-			fmt.Println("Json written to file")
+			println("Error create json")
 		}
-
-		//reading from a json file
-		jfile, err = os.Open("user.json")
-		if err != nil{
-			fmt.Println("Error opening json file")
-			return
-		}else{
-			fmt.Println(" reading json file")
-		}
-		defer jfile.Close()
-
-		//decode
-
-		decode := json.NewDecoder(jfile)
-		err = decode.Decode(&user)
-		if err == nil{
-			fmt.Printf("User loaded from JSON: %+v\n, user", user)
-		}else{
-			fmt.Println(" Error loading json file")
-		}
-
 
 		//writing a csv
 
