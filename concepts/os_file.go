@@ -1,6 +1,7 @@
 package concepts
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -73,4 +74,59 @@ func ReadFromJson(filename string, data any) (string, error) {
 		return "", err
 	}
 	return fmt.Sprintf("User loaded from JSON: %+v\n, user", data), nil
+}
+
+func CreateCsv(filename string) (*os.File, error) {
+	//if you call the csv alone you have to close the file after
+	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return nil, err
+	}
+
+	// defer f.Close()
+	return f, nil
+
+}
+
+func WriteToCsv(filename string, records [][]string) (string, error) {
+	f, err := CreateCsv(filename)
+	if err != nil {
+		return "", err
+	}
+	defer f.Close()
+
+	w := csv.NewWriter(f)
+	defer w.Flush()
+
+	for _, i := range records {
+		err := w.Write(i)
+		if err != nil {
+			return "", err
+		}
+	}
+	return fmt.Sprintln("csv written"), nil
+
+}
+
+func ReadFromCsv(filename string) ([][]string, error) {
+	f, err :=  os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(" reading csv file")
+	defer f.Close()
+
+	reader := csv.NewReader(f)
+	records, err := reader.ReadAll()
+
+
+	if err != nil {
+		return nil, err
+	}
+
+	for i, record := range records {
+		fmt.Printf("Row %d: %v\n", i, record)
+	}
+
+	return records, nil
 }

@@ -2,7 +2,6 @@ package main
 
 import (
 	// "bufio"
-	"encoding/csv"
 	"errors"
 	"fmt"
 
@@ -12,7 +11,6 @@ import (
 	"github.com/Dev-Tams/go-module/concepts"
 	"github.com/Dev-Tams/go-module/refresh"
 )
-
 
 var records = [][]string{
 	{"Name", "Sex", "Email"},
@@ -138,7 +136,6 @@ func main() {
 		refresh.SendLog(p.Logger, p.Message)
 	}
 
-
 	//interface{} i.e any
 
 	var a any = "Tami"
@@ -186,7 +183,6 @@ func main() {
 	}
 
 	fmt.Println("Log entries appended to", filename)
-
 
 	//errors
 
@@ -248,206 +244,171 @@ func main() {
 		} else {
 			fmt.Println("Generic error:", err)
 		}
-	}else{
+	} else {
 		fmt.Println(result)
 	}
 
 	cart, err := concepts.AddToCart("tamiil.com", 0, 25)
-		if err != nil{
-			var (
-				invErr concepts.InventoryError
-				emailErr concepts.EmailValidationError
-			)
-			if errors.As(err, &invErr) {
-				fmt.Println("Custom Inventory Error:", invErr)
-			}else if errors.As(err, &emailErr){
-				fmt.Println("Email Error:", emailErr)
-			}else{
-				fmt.Println("Generic error:", err)
-			}
-		}else{
-			fmt.Print(cart)
+	if err != nil {
+		var (
+			invErr   concepts.InventoryError
+			emailErr concepts.EmailValidationError
+		)
+		if errors.As(err, &invErr) {
+			fmt.Println("Custom Inventory Error:", invErr)
+		} else if errors.As(err, &emailErr) {
+			fmt.Println("Email Error:", emailErr)
+		} else {
+			fmt.Println("Generic error:", err)
 		}
+	} else {
+		fmt.Print(cart)
+	}
 
-		//panic
-		concepts.Negative(10)
-		concepts.Negative(-5)
-		concepts.Negative(10)
+	//panic
+	concepts.Negative(10)
+	concepts.Negative(-5)
+	concepts.Negative(10)
 
-		admin := concepts.Admin{
+	admin := concepts.Admin{
 		User: concepts.User{
 			AcountId: "2",
 			Person: concepts.Person{
-				Name: "Tami",
+				Name:  "Tami",
 				Email: "tami@mail.com",
 			},
 		},
 		Privileges: []string{"read", "write", "delete"},
-		}
-
-
-		user := concepts.User{
-			AcountId: "4",
-			Person: concepts.Person{
-				Name: "Tammy",
-				Email: "tammy@mail.com",
-			},
-		}
-		
-
-		
-		fmt.Println("Admin Name:", admin.Name)           
-		fmt.Println("Admin Email:", admin.Email)
-		fmt.Println("Admin ID:", admin.AcountId)
-		fmt.Println("Privileges:", admin.Privileges)
-
-		fmt.Println(admin.Greet())
-		fmt.Println(user.FullContact())
-		fmt.Println(admin.HasPrivi("delete"))
-		concepts.CheckAdmin(user)
-		concepts.CheckAdmin(admin)
-
-
-		//opens a file
-		file, err := os.Open("logbook.txt")
-		if err != nil{
-			fmt.Println("error opening file", err)
-		}else{
-			fmt.Println("File opened successfully!")
-		}
-		defer file.Close()
-
-		//reads the file by line
-		// scanner := bufio.NewScanner(file)
-
-		// for scanner.Scan(){
-		// 	line := scanner.Text()
-		// 	fmt.Println("line", line)
-		// }
-
-		// if  err := scanner.Err(); err != nil{
-		// 	fmt.Println("error with reading", err)
-		// }
-
-		//create a new file
-
-		newfile, err := os.Create("notes/newfile")
-		if err != nil{
-			fmt.Println("Error creating new file", err)
-		}else{
-			fmt.Println("file created")
-		}
-
-		defer newfile.Close()
-
-		//write to a file
-
-		
-		_, err = newfile.WriteString("Hello, there!\n writing to a new file ")
-		if err != nil{
-			fmt.Println("error writing to a new file", err)
-				return
-			}else{
-				fmt.Println("file written successfully")
-			}
-			
-			
-		//Additionally you cant write to an existing file due to permission errors, you can add by appending
-
-		//appending to the existing file tied to the file var
-		file, _ = os.OpenFile("logbook.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-		defer file.Close()
-
-		_, err = file.WriteString("Hello, there!\n Appending to an existing file ")
-		if err != nil{
-			fmt.Println("error appending to file", err)
-			return
-		}else{
-			fmt.Println("Line appended successfully.")
-		}
-
-		rfile, err := os.Create("notes/refresh")
-		if err != nil{
-			fmt.Println(" error creating file", err)
-			return 
-		}else{
-			fmt.Println("file created" , rfile)
-		}
-
-		defer rfile.Close()
-
-
-		//writing to a json file
-		
-		// jfile, err := os.Create("user.json")
-
-		// if err == nil{
-		// 	fmt.Println("new json file created")
-		// }else{
-		// 	fmt.Println("error creating json file", err)
-		// 	return
-		// }
-
-		// defer jfile.Close()
-
-		// encoder := json.NewEncoder(jfile)
-
-		// err = encoder.Encode(user)
-		// if err != nil{
-		// 	fmt.Println(" error econding json", err)
-		// 	return
-		// }else{
-		// 	fmt.Println("Json written to file")
-		// }
-
-		//write and read from json
-		jfile, err := concepts.WriteToJson("user.json", user)
-		concepts.ReadFromJson(jfile, user)
-		if err != nil{
-			println("Error create json")
-		}
-
-		//writing a csv
-
-		cfile, err := os.Create("Cfile.csv")
-		if err != nil{
-			fmt.Println(" Errror creating csv file", err)
-			return
-		}else{
-			fmt.Println(" CSV file created")
-		}
-		defer cfile.Close()
-
-		csvwrite := csv.NewWriter(cfile)
-		
-		for _, i := range records{
-			err := csvwrite.Write(i)
-			if err != nil{
-				fmt.Println(" Failed to write csv record")
-				return
-			}
-		}
-		defer csvwrite.Flush()
-		cfile.Close()
-		fmt.Println("csv written ")
-
-		cfile, err = os.OpenFile("Cfile.csv", os.O_RDONLY| os.O_WRONLY, 0644)
-		if err != nil{
-			fmt.Println("Error opening csv file")
-			return
-		}else{
-			fmt.Println(" reading csv file")
-		}
-		defer cfile.Close()
-		
-		reader := csv.NewReader(cfile)
-		records, err := reader.ReadAll()
-		for i, record := range records {
-		if err != nil {
-			fmt.Println("Error reading CSV:", err)
-			return
-		}
-		fmt.Printf("Row %d: %v\n", i, record)
-		
 	}
+
+	user := concepts.User{
+		AcountId: "4",
+		Person: concepts.Person{
+			Name:  "Tammy",
+			Email: "tammy@mail.com",
+		},
+	}
+
+	fmt.Println("Admin Name:", admin.Name)
+	fmt.Println("Admin Email:", admin.Email)
+	fmt.Println("Admin ID:", admin.AcountId)
+	fmt.Println("Privileges:", admin.Privileges)
+
+	fmt.Println(admin.Greet())
+	fmt.Println(user.FullContact())
+	fmt.Println(admin.HasPrivi("delete"))
+	concepts.CheckAdmin(user)
+	concepts.CheckAdmin(admin)
+
+	//opens a file
+	file, err := os.Open("logbook.txt")
+	if err != nil {
+		fmt.Println("error opening file", err)
+	} else {
+		fmt.Println("File opened successfully!")
+	}
+	defer file.Close()
+
+	//reads the file by line
+	// scanner := bufio.NewScanner(file)
+
+	// for scanner.Scan(){
+	// 	line := scanner.Text()
+	// 	fmt.Println("line", line)
+	// }
+
+	// if  err := scanner.Err(); err != nil{
+	// 	fmt.Println("error with reading", err)
+	// }
+
+	//create a new file
+
+	newfile, err := os.Create("notes/newfile")
+	if err != nil {
+		fmt.Println("Error creating new file", err)
+	} else {
+		fmt.Println("file created")
+	}
+
+	defer newfile.Close()
+
+	//write to a file
+
+	_, err = newfile.WriteString("Hello, there!\n writing to a new file ")
+	if err != nil {
+		fmt.Println("error writing to a new file", err)
+		return
+	} else {
+		fmt.Println("file written successfully")
+	}
+
+	//Additionally you cant write to an existing file due to permission errors, you can add by appending
+
+	//appending to the existing file tied to the file var
+	file, _ = os.OpenFile("logbook.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	defer file.Close()
+
+	_, err = file.WriteString("Hello, there!\n Appending to an existing file ")
+	if err != nil {
+		fmt.Println("error appending to file", err)
+		return
+	} else {
+		fmt.Println("Line appended successfully.")
+	}
+
+	rfile, err := os.Create("notes/refresh")
+	if err != nil {
+		fmt.Println(" error creating file", err)
+		return
+	} else {
+		fmt.Println("file created", rfile)
+	}
+
+	defer rfile.Close()
+
+	//writing to a json file
+
+	// jfile, err := os.Create("user.json")
+
+	// if err == nil{
+	// 	fmt.Println("new json file created")
+	// }else{
+	// 	fmt.Println("error creating json file", err)
+	// 	return
+	// }
+
+	// defer jfile.Close()
+
+	// encoder := json.NewEncoder(jfile)
+
+	// err = encoder.Encode(user)
+	// if err != nil{
+	// 	fmt.Println(" error econding json", err)
+	// 	return
+	// }else{
+	// 	fmt.Println("Json written to file")
+	// }
+
+	//write and read from json
+	jfile, err := concepts.WriteToJson("user.json", user)
+	concepts.ReadFromJson(jfile, user)
+	if err != nil {
+		println("Error create json")
+	}
+
+	//writing a csv
+
+	msg, err := concepts.WriteToCsv("file.csv", records)
+	if err != nil {
+		fmt.Println("Error writing to CSV:", err)
+	} else {
+		fmt.Println(msg)
+}
+
+	csvread, err := concepts.ReadFromCsv("file.csv")
+	if err != nil {
+		fmt.Println("Error writing to CSV:", err)
+		return
+	}
+	fmt.Println(csvread)
 }
