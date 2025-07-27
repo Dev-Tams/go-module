@@ -1,6 +1,7 @@
 package concepts
 
 import (
+	"bufio"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
@@ -17,28 +18,23 @@ func Createfile(filename string) (string, error) {
 
 }
 
-func OpenFile(filename string) (string, error) {
+func OpenFile(filename string) (*os.File, error) {
 	f, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	// defer f.Close()
+	return f, nil
+}
+
+func Appendtofile(filename, text string) (string, error) {
+	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return "", err
 	}
-	f.Close()
-	return fmt.Sprintln("File opened successfully!"), nil
-}
 
-// func WriteString(filename, text string) (string, error) {
-// 	OpenFile(filename)
-// 	_, err := filename.WriteString(text)
-// 	if err != nil {
-// 		return "", err
-// 	}
-// 	return fmt.Sprintln("file written successfully"), nil
-// }
-
-func Appendtofile(filename, text string) (string, error) {
-	f, _ := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	defer f.Close()
-	_, err := f.WriteString(text)
+	_, err = f.WriteString(text)
 	if err != nil {
 		return "", err
 	}
@@ -109,7 +105,7 @@ func WriteToCsv(filename string, records [][]string) (string, error) {
 }
 
 func ReadFromCsv(filename string) ([][]string, error) {
-	f, err :=  os.Open(filename)
+	f, err := os.Open(filename)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +114,6 @@ func ReadFromCsv(filename string) ([][]string, error) {
 
 	reader := csv.NewReader(f)
 	records, err := reader.ReadAll()
-
 
 	if err != nil {
 		return nil, err
@@ -129,4 +124,19 @@ func ReadFromCsv(filename string) ([][]string, error) {
 	}
 
 	return records, nil
+}
+
+func ScanFile(file string) (string, error) {
+	f, _ := OpenFile(file)
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		line := scanner.Text()
+		fmt.Println("line", line)
+
+		if err := scanner.Err(); err != nil {
+		return 	fmt.Sprintln("error with reading", err), nil
+		}
+
+	}
+	return "", nil
 }

@@ -1,12 +1,10 @@
 package main
 
 import (
-	// "bufio"
 	"errors"
 	"fmt"
 
 	// "go/scanner"
-	"os"
 
 	"github.com/Dev-Tams/go-module/concepts"
 	"github.com/Dev-Tams/go-module/refresh"
@@ -167,15 +165,8 @@ func main() {
 
 	filename := "logbook.txt"
 
-	f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		fmt.Println("Error writing to file:", err)
-		return
-	}
-	defer f.Close()
-
 	for _, entry := range logbook {
-		_, err := f.WriteString(entry + "\n")
+		_, err :=concepts.Appendtofile(filename, entry + "\n")
 		if err != nil {
 			fmt.Println("Error writing entry:", err)
 			return
@@ -300,94 +291,20 @@ func main() {
 	concepts.CheckAdmin(user)
 	concepts.CheckAdmin(admin)
 
-	//opens a file
-	file, err := os.Open("logbook.txt")
-	if err != nil {
-		fmt.Println("error opening file", err)
-	} else {
-		fmt.Println("File opened successfully!")
-	}
-	defer file.Close()
 
-	//reads the file by line
-	// scanner := bufio.NewScanner(file)
-
-	// for scanner.Scan(){
-	// 	line := scanner.Text()
-	// 	fmt.Println("line", line)
-	// }
-
-	// if  err := scanner.Err(); err != nil{
-	// 	fmt.Println("error with reading", err)
-	// }
-
+	// reads the file by line
+	concepts.ScanFile(filename)
 	//create a new file
-
-	newfile, err := os.Create("notes/newfile")
-	if err != nil {
-		fmt.Println("Error creating new file", err)
-	} else {
-		fmt.Println("file created")
-	}
-
-	defer newfile.Close()
+	concepts.Createfile("notes/newfile")
 
 	//write to a file
-
-	_, err = newfile.WriteString("Hello, there!\n writing to a new file ")
+	_, err = concepts.Appendtofile("notes/newfile", "Hello there!\n writing to a new file")
 	if err != nil {
 		fmt.Println("error writing to a new file", err)
 		return
 	} else {
 		fmt.Println("file written successfully")
 	}
-
-	//Additionally you cant write to an existing file due to permission errors, you can add by appending
-
-	//appending to the existing file tied to the file var
-	file, _ = os.OpenFile("logbook.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	defer file.Close()
-
-	_, err = file.WriteString("Hello, there!\n Appending to an existing file ")
-	if err != nil {
-		fmt.Println("error appending to file", err)
-		return
-	} else {
-		fmt.Println("Line appended successfully.")
-	}
-
-	rfile, err := os.Create("notes/refresh")
-	if err != nil {
-		fmt.Println(" error creating file", err)
-		return
-	} else {
-		fmt.Println("file created", rfile)
-	}
-
-	defer rfile.Close()
-
-	//writing to a json file
-
-	// jfile, err := os.Create("user.json")
-
-	// if err == nil{
-	// 	fmt.Println("new json file created")
-	// }else{
-	// 	fmt.Println("error creating json file", err)
-	// 	return
-	// }
-
-	// defer jfile.Close()
-
-	// encoder := json.NewEncoder(jfile)
-
-	// err = encoder.Encode(user)
-	// if err != nil{
-	// 	fmt.Println(" error econding json", err)
-	// 	return
-	// }else{
-	// 	fmt.Println("Json written to file")
-	// }
 
 	//write and read from json
 	jfile, err := concepts.WriteToJson("user.json", user)
@@ -403,7 +320,7 @@ func main() {
 		fmt.Println("Error writing to CSV:", err)
 	} else {
 		fmt.Println(msg)
-}
+	}
 
 	csvread, err := concepts.ReadFromCsv("file.csv")
 	if err != nil {
