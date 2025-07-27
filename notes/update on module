@@ -17,6 +17,14 @@ Using Go modules and packages
 Struct Embedding and Composition
 
 Working with Files in Go
+(remaining)
+ How to ignore or rename fields using JSON tags?
+
+ How to marshal/unmarshal slices or maps?
+
+ How to read JSON from an HTTP API response?
+
+ 
 
 working with HTTP APIs
 

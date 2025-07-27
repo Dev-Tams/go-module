@@ -51,6 +51,7 @@ func WriteToJson(filename string, data any) (string, error) {
 
 	encoder := json.NewEncoder(f)
 	err = encoder.Encode(data)
+	encoder.SetIndent("", "  ")
 	if err != nil {
 		return "", err
 	}

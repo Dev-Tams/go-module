@@ -328,4 +328,18 @@ func main() {
 		return
 	}
 	fmt.Println(csvread)
+
+
+	mar, err := concepts.BasicMarsh(user)
+	if err != nil{
+		fmt.Println("Error with marshalling", err)
+	}else{
+		fmt.Println(mar)
+	}
+	mar1, err := concepts.WriteToJson("user.json", mar)
+	if err != nil{
+		fmt.Println("Error writing to json", err)
+	}else{
+		fmt.Println("Successfull", mar1)
+	}
 }
