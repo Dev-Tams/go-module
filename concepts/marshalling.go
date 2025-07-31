@@ -10,16 +10,20 @@ func BasicMarsh(data any) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	jsonData, err = json.MarshalIndent(data, "", "  ")
+	_, err = json.MarshalIndent(data, "", "  ")
+	if err != nil {
+		return "", err
+	}
 
 	return fmt.Sprintln(string(jsonData)), nil
+} 
+
+func BasicUnMarsh(datas []byte, data any) (string, error){
+	jsonData := json.Unmarshal(datas, data)
+	err := jsonData
+	if err != nil{
+		return "", nil
+	}
+
+	return  fmt.Sprintln(error(jsonData)), nil
 }
-
-// func BasicUnMarsh(data any) (string, error){
-// 	jsonData, err := json.Unmarshal([], data)
-// 	if err != nil{
-// 		return "", nil
-// 	}
-
-// 	return  fmt.Sprintln(string(jsonData)), nil
-// }

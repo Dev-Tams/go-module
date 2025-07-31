@@ -263,7 +263,7 @@ func main() {
 
 	admin := concepts.Admin{
 		User: concepts.User{
-			AcountId: "2",
+			AccountId: "2",
 			Person: concepts.Person{
 				Name:  "Tami",
 				Email: "tami@mail.com",
@@ -273,7 +273,7 @@ func main() {
 	}
 
 	user := concepts.User{
-		AcountId: "4",
+		AccountId: "4",
 		Person: concepts.Person{
 			Name:  "Tammy",
 			Email: "tammy@mail.com",
@@ -282,7 +282,7 @@ func main() {
 
 	fmt.Println("Admin Name:", admin.Name)
 	fmt.Println("Admin Email:", admin.Email)
-	fmt.Println("Admin ID:", admin.AcountId)
+	fmt.Println("Admin ID:", admin.AccountId)
 	fmt.Println("Privileges:", admin.Privileges)
 
 	fmt.Println(admin.Greet())
@@ -322,12 +322,13 @@ func main() {
 		fmt.Println(msg)
 	}
 
-	csvread, err := concepts.ReadFromCsv("file.csv")
-	if err != nil {
-		fmt.Println("Error writing to CSV:", err)
-		return
-	}
-	fmt.Println(csvread)
+	//Read from csv
+	// csvread, err = concepts.ReadFromCsv("file.csv")
+	// if err != nil {
+	// 	fmt.Println("Error Reading from CSV:", err)
+	// 	return
+	// }
+	// // fmt.Println(csvread)
 
 
 	mar, err := concepts.BasicMarsh(user)
@@ -336,6 +337,13 @@ func main() {
 	}else{
 		fmt.Println(mar)
 	}
+
+	// mars, err := concepts.BasicUnMarsh(, user)
+	// if err != nil{
+	// 	fmt.Println("Error with marshalling", err)
+	// }else{
+	// 	fmt.Println(mars)
+	// }
 	mar1, err := concepts.WriteToJson("user.json", mar)
 	if err != nil{
 		fmt.Println("Error writing to json", err)
