@@ -6,24 +6,20 @@ import (
 )
 
 func BasicMarsh(data any) (string, error) {
+
+	indent, err := json.MarshalIndent(data, "", "  ")
+	if err == nil {
+		return string(indent), err
+	}
+
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		return "", err
 	}
-	_, err = json.MarshalIndent(data, "", "  ")
-	if err != nil {
-		return "", err
-	}
-
 	return fmt.Sprintln(string(jsonData)), nil
 } 
 
-func BasicUnMarsh(datas []byte, data any) (string, error){
-	jsonData := json.Unmarshal(datas, data)
-	err := jsonData
-	if err != nil{
-		return "", nil
-	}
-
-	return  fmt.Sprintln(error(jsonData)), nil
+// BasicUnmarshal decodes JSON from input into out (which must be a pointer).
+func BasicUnMarsh(input []byte, out any) error {
+	return json.Unmarshal(input, out)
 }

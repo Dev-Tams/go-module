@@ -338,12 +338,15 @@ func main() {
 		fmt.Println(mar)
 	}
 
-	// mars, err := concepts.BasicUnMarsh(, user)
-	// if err != nil{
-	// 	fmt.Println("Error with marshalling", err)
-	// }else{
-	// 	fmt.Println(mars)
-	// }
+	
+	if err := concepts.BasicUnMarsh([]byte(mar), &user); err != nil {
+		fmt.Println("Error unmarshalling:", err)
+		return
+	}
+	fmt.Printf("Decoded struct: %+v\n", user)
+
+
+
 	mar1, err := concepts.WriteToJson("user.json", mar)
 	if err != nil{
 		fmt.Println("Error writing to json", err)
