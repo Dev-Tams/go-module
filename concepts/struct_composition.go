@@ -11,8 +11,8 @@ type RoleChecker interface{
 
 
 type User struct {
-	 AcountId string
-	 Person
+	AccountId string `json:"account_id"`
+	Person   
 }
 
 type Admin struct {

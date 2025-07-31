@@ -2,7 +2,7 @@ Go
  What is panic?
 
  panic immediately stops the normal flow of your program.
- It's like throwing an exception: the function panics, and control goes up the call stack.
+ It’s like throwing an exception: the function panics, and control goes up the call stack.
  Used for unrecoverable errors (e.g., out-of-bounds access, nil dereference)
  
  ```
@@ -30,7 +30,7 @@ When Should You Use panic/recover?
 
 ✅ Use it when:
 
- You're dealing with critical failure where continuing makes no sense.
+ You’re dealing with critical failure where continuing makes no sense.
  You’re building robust libraries and want to catch internal panics safely.
 
 

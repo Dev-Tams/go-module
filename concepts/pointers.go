@@ -23,7 +23,9 @@ type Car struct{
 }
 
 type Person struct{
-	Name, Career, Email string
+	Name string 	`json:"name"`
+	Career string 	`json:"career,omitempty"`
+	Email string	`json:"email"`
 	Age int
 }
 
