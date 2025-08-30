@@ -4,353 +4,88 @@ import (
 	"errors"
 	"fmt"
 
-	// "go/scanner"
-
 	"github.com/Dev-Tams/go-module/concepts"
-	"github.com/Dev-Tams/go-module/refresh"
 )
 
-var records = [][]string{
-	{"Name", "Sex", "Email"},
-	{"Tami", "f", "tami@mail.com"},
-	{"Tonye", "f", "tonye@mail.com"},
-	{"Tony", "m", "tony@mail.com"},
-	{"Tommy", "m", "tommy@mail.com"},
-	{"T", "f", "t@mail.com"},
-}
 
-func main() {
+func main(){
+	m := concepts.SayHi()
 
-	// Methods
-	c := concepts.SayHi()
-	fmt.Println(c)
+	fmt.Println(m)
 
-	// m := concepts.Calc{X: 3, Y:4}
-	// fmt.Println(m.Example())
 
-	// // Pointers
-	// // Pointers are used to reference a memory address of a variable.
-	// cp := 6.3
-	// concepts.ChangePointerValue(&cp)
-	// fmt.Println("Multiplied pointer value by 2:", cp)
+	p := 6.0
+	concepts.ChangePointerValue(&p)
+	fmt.Println(p)
 
-	// x, y := 5, 10
-	// fmt.Println("Before swapped:", x, y)
-	// concepts.Swap(&x, &y)
-	// fmt.Println("Swapped values:", x, y)
+	a := 4
+	b := 5
+	concepts.Swap(&a, &b)
+	fmt.Println(a, b)
 
-	// car := concepts.Car{Mile: 2400, Brand: "Toyota Avalon", Color: "Red"}
 
-	// ecar := concepts.ElectricCar{
-	// 	Car: concepts.Car{Mile: 2400, Brand: "Tesla", Color: "Red"},
-	// 	BatteryHealth: 85,
-	// }
-	// fmt.Println(ecar)
-	// fmt.Println(car)
+	my := concepts.Car{Color: "red" , Brand: "Toyota",  Mile: 0}
 
-	// fmt.Println("for every test ride, a mile is added to", car.Mile)
-	// concepts.CarInfo(&car)
+	y := concepts.CarInfo(&my)
+	x := concepts.CarInfo(&my)
+	fmt.Println(y, x)
 
-	// fmt.Println("for every test ride, a mile is added to", car.Mile)
-	// concepts.CarInfo(&ecar.Car)
-	// fmt.Println(car.Repaint("Black"))
-	// fmt.Println(ecar.Repaint("Grey"))
-	// fmt.Println(ecar.Charge())
 
-	// B := concepts.Person{Name: "Tami", Age: 23, Career: "Programming"}
-	// fmt.Println(B)
-	// fmt.Println(B.Hbd())
-	// fmt.Println(B.Hbd())
-	// fmt.Println(B.Hbd())
-
-	cv := concepts.Counter{Value: 5}
-	// fmt.Println(cv.Show())
-	// cv.Increment()
-	// cv.Increment()
-	// fmt.Println(cv.Show())
-	// cv.Decrement()
-	// fmt.Println(cv.Show())
-	res, err := cv.Multiply(0)
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(res)
-	}
-	// fmt.Println(cv.Multiply(-1))
-	// fmt.Println(cv.Show())
-	// fmt.Println(cv.Reset())
-	// fmt.Println(cv.Show())
-
-	// Interfaces
-	// circle := concepts.Circle{Radius: 5}
-	// rectangle := concepts.Rectangle{Width: 4, Height: 6}
-	// concepts.PrintArea(circle) //Interface call is abstract and reusable
-	// concepts.PrintArea(rectangle)
-	// fmt.Println("Area of circle:", circle.Area()) //Direct call is explicit and flexible
-	// fmt.Println("Area of rectangle:", rectangle.Area())
-
-	//instead of // calling the Notify method directly, we can use the Notifier interface
-	// to send notifications through different channels like Email and SMS.
-
-	// email := concepts.Email{Address: "test@mail.com"}
-	// concepts.SendNoti(email)
-	// call := concepts.Sms{Phone_number: "+234-00-00-1"}
-	// concepts.SendNoti(call)
-
-	// Using a slice of Notifier interface to send notifications
-	// This allows us to handle multiple notification types in a single loop.
-	// 	notifiers := []concepts.Notifier{
-	// 	concepts.Email{Address: "test@mail.com"},
-	// 	concepts.Sms{Phone_number: "+234-00-00-1"},
-	// }
-
-	// for _, n := range notifiers {
-	// 	concepts.SendNoti(n)
-	// }
-
-	payments := []concepts.PaymentMethods{
-		{Method: concepts.CreditCard{Name: "Tami"}, Amount: 300},
-		{Method: concepts.Paypal{Email: "tami@mail.com"}, Amount: 150},
-		{Method: concepts.CryptoWallet{Address: "0x123abc456"}, Amount: 820},
-	}
-	for _, p := range payments {
-		concepts.ProcessPayment(p.Method, p.Amount) // Process payment using the interface method
+	cc := concepts.Counter{ Value: 5}
+	cc.Decrement()
+	fmt.Println(cc.Show())
+	cc.Multiply(2)
+	fmt.Println(cc.Show())
+	cc.Reset()
+	fmt.Println(cc.Show())
+	
+	yy:= concepts.Person{
+		Name: "T",
+		Career: "Trainer",
+		Age: 20,
 	}
 
-	// //refresher
-	// u := refresh.UserSub{Name: "Tami", Amount: 0}
-	// u.CheckUSerSub()
-	// u.SetUserSub()
-	// fmt.Print(u.PayUserSub(30))
-	// u.SetUserSub()
-	// u.CheckUSerSub()
+	fmt.Println(yy)
+	
+	fmt.Println(yy.Hbd())
 
-	syslogger := []refresh.LogJob{
-		{Logger: refresh.ConsoleLogger{}, Message: "prints to screen"},
-		{Logger: refresh.FileLogger{Filename: "sys"}, Message: "writing to file"},
-		{Logger: refresh.RemoteLogger{Endpoint: "sys123"}, Message: "sending log to server"},
-	}
-	for _, p := range syslogger {
-		refresh.SendLog(p.Logger, p.Message)
+	shape := []concepts.Shape{concepts.Circle{Radius: 5}, 
+		concepts.Rectangle{Width: 40, Height: 20},
 	}
 
-	//interface{} i.e any
-
-	var a any = "Tami"
-
-	s, ok := a.(string)
-	if ok {
-		fmt.Println("Value:", s)
-	} else {
-		fmt.Println("interface conversion: interface {} is not string")
+	for _, sh := range shape{
+		concepts.PrintArea(sh)
 	}
-	var x any = "Tami"
-	concepts.CheckType(x)
-	concepts.CheckType(true)
-	concepts.Process("Test Type")
-	concepts.Process(10)
-	concepts.Process(true)
-	concepts.Process(3.24)
-	concepts.Process(c)
-	concepts.Process(false)
 
-	//appending any
-	var logbook []string
+	noti := []concepts.Notifier{
+		concepts.Email{Address: "t@mail.com"}, 
+		concepts.Sms{Phone_number: "12536"},
+	}
+	
+	for _, i := range noti{
+		concepts.SendNoti(i)
+	}
 
-	logbook = append(logbook, concepts.LogAnything("Hello there!"))
-	logbook = append(logbook, concepts.LogAnything(43))
-	logbook = append(logbook, concepts.LogAnything(concepts.UserLog{Name: "Tami"}))
-	logbook = append(logbook, concepts.LogAnything(concepts.ErrorLog{Code: 404, Message: "Not found"}))
-	logbook = append(logbook, concepts.LogAnything(123.456))
 
-	filename := "logbook.txt"
+	pay := []concepts.PaymentMethods{
+		{Method: concepts.CreditCard{Name: "mastercard"}, Amount: 00},
+		{Method: concepts.Paypal{Email: "t@paypal.com"}, Amount: 40},
+		{Method: concepts.CryptoWallet{Address: "0xxxxxxxxxxxx"}, Amount: 700},
+	}
 
-	for _, entry := range logbook {
-		_, err :=concepts.Appendtofile(filename, entry + "\n")
-		if err != nil {
-			fmt.Println("Error writing entry:", err)
-			return
+	for _, j := range pay{
+		errpay, err := concepts.ProcessPayment(j.Method, j.Amount)
+		if err != nil{
+			var tErr concepts.TransactionError
+			if errors.As(err, &tErr){
+				fmt.Println(tErr)
+			}else{
+				println(err)
+			}
 		}
-	}
-
-	fmt.Println("Log entries appended to", filename)
-
-	//errors
-
-	num, err := concepts.CheckPositive(-5)
-	if err != nil {
-		fmt.Println("Error:", err)
-	} else {
-		fmt.Println("Valid num:", num)
-	}
-
-	email, err := concepts.CheckEmail("tami@mail.com")
-	if err != nil {
-		fmt.Println("error:", err)
-	} else {
-		fmt.Printf("%v is a valid email\n", email)
-	}
-
-	age, err := concepts.CheckAge(12)
-	if err != nil {
-		fmt.Println("error:", err)
-	} else {
-		fmt.Printf("age %v is allowed\n", age)
-	}
-
-	username, err := concepts.CheckLogin("Tami", "password123")
-	if err != nil {
-		if loginErr, ok := err.(concepts.LoginError); ok {
-			fmt.Println("Custom error caught:", loginErr)
-		} else {
-			fmt.Println("Generic error:", err)
-		}
-	} else {
-		fmt.Println("Successfully logged in as", username)
-	}
-
-	usernames, err := concepts.Inactive("Tami", "12")
-	if err != nil {
-		if inactiveErr, ok := err.(concepts.LoginError); ok {
-			fmt.Println("Error:", inactiveErr)
-		} else {
-			fmt.Println("Generic error:", err)
-		}
-	} else {
-		fmt.Println("user", usernames, "is active")
-	}
-
-	status, err := concepts.PlaceOrder(4, "Chita Avanue", "Bread", "18:30")
-	if err != nil {
-		concepts.HandleError(err)
-	} else {
-		fmt.Println(status)
-	}
-
-	result, err := concepts.ProcessPayment(concepts.CreditCard{Name: "Tami"}, 0)
-	if err != nil {
-		var tErr concepts.TransactionError
-		if errors.As(err, &tErr) {
-			fmt.Println("Handle specifically:", tErr)
-		} else {
-			fmt.Println("Generic error:", err)
-		}
-	} else {
-		fmt.Println(result)
-	}
-
-	cart, err := concepts.AddToCart("tamiil.com", 0, 25)
-	if err != nil {
-		var (
-			invErr   concepts.InventoryError
-			emailErr concepts.EmailValidationError
-		)
-		if errors.As(err, &invErr) {
-			fmt.Println("Custom Inventory Error:", invErr)
-		} else if errors.As(err, &emailErr) {
-			fmt.Println("Email Error:", emailErr)
-		} else {
-			fmt.Println("Generic error:", err)
-		}
-	} else {
-		fmt.Print(cart)
-	}
-
-	//panic
-	concepts.Negative(10)
-	concepts.Negative(-5)
-	concepts.Negative(10)
-
-	admin := concepts.Admin{
-		User: concepts.User{
-			AccountId: "2",
-			Person: concepts.Person{
-				Name:  "Tami",
-				Email: "tami@mail.com",
-			},
-		},
-		Privileges: []string{"read", "write", "delete"},
-	}
-
-	user := concepts.User{
-		AccountId: "4",
-		Person: concepts.Person{
-			Name:  "Tammy",
-			Email: "tammy@mail.com",
-		},
-	}
-
-	fmt.Println("Admin Name:", admin.Name)
-	fmt.Println("Admin Email:", admin.Email)
-	fmt.Println("Admin ID:", admin.AccountId)
-	fmt.Println("Privileges:", admin.Privileges)
-
-	fmt.Println(admin.Greet())
-	fmt.Println(user.FullContact())
-	fmt.Println(admin.HasPrivi("delete"))
-	concepts.CheckAdmin(user)
-	concepts.CheckAdmin(admin)
-
-
-	// reads the file by line
-	concepts.ScanFile(filename)
-	//create a new file
-	concepts.Createfile("notes/newfile")
-
-	//write to a file
-	_, err = concepts.Appendtofile("notes/newfile", "Hello there!\n writing to a new file")
-	if err != nil {
-		fmt.Println("error writing to a new file", err)
-		return
-	} else {
-		fmt.Println("file written successfully")
-	}
-
-	//write and read from json
-	jfile, err := concepts.WriteToJson("user.json", user)
-	concepts.ReadFromJson(jfile, user)
-	if err != nil {
-		println("Error create json")
-	}
-
-	//writing a csv
-
-	msg, err := concepts.WriteToCsv("file.csv", records)
-	if err != nil {
-		fmt.Println("Error writing to CSV:", err)
-	} else {
-		fmt.Println(msg)
-	}
-
-	//Read from csv
-	// csvread, err = concepts.ReadFromCsv("file.csv")
-	// if err != nil {
-	// 	fmt.Println("Error Reading from CSV:", err)
-	// 	return
-	// }
-	// // fmt.Println(csvread)
-
-
-	mar, err := concepts.BasicMarsh(user)
-	if err != nil{
-		fmt.Println("Error with marshalling", err)
-	}else{
-		fmt.Println(mar)
+		fmt.Println(errpay)
 	}
 
 	
-	if err := concepts.BasicUnMarsh([]byte(mar), &user); err != nil {
-		fmt.Println("Error unmarshalling:", err)
-		return
-	}
-	fmt.Printf("Decoded struct: %+v\n", user)
 
-
-
-	mar1, err := concepts.WriteToJson("user.json", mar)
-	if err != nil{
-		fmt.Println("Error writing to json", err)
-	}else{
-		fmt.Println("Successfull", mar1)
-	}
 }

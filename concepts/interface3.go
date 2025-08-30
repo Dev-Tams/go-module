@@ -41,7 +41,7 @@ func (cw CryptoWallet) Pay(amount float64) string {
 }
 
 func (t TransactionError) Error() string{
-	return fmt.Sprintf("card declined: %v", t.Reason)
+	return fmt.Sprintf("declined: %v", t.Reason)
 }
 
 func ProcessPayment(p PaymentMethod, amount float64) (string, error) {
