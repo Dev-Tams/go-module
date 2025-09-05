@@ -88,4 +88,8 @@ func main(){
 
 	
 
+	concepts.CheckType(pay)
+	concepts.Process(pay)
+	mm := concepts.LogAnything(concepts.CarInfo(&my))
+	fmt.Println(mm)
 }
