@@ -1,14 +1,24 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/Dev-Tams/go-module/concepts"
 )
 
 
 func main(){
+
+	t := concepts.User{
+		Person: concepts.Person{
+			Name:  "Tams",
+			Email: "tams@example.com",
+		},
+		AccountId: "A123",
+	}
 	m := concepts.SayHi()
 
 	fmt.Println(m)
@@ -92,4 +102,54 @@ func main(){
 	concepts.Process(pay)
 	mm := concepts.LogAnything(concepts.CarInfo(&my))
 	fmt.Println(mm)
+
+	var logbook []string 
+
+	logbook = append(logbook, concepts.LogAnything(mm))
+
+	filename := "logbook.txt"
+	
+	for i := range logbook{
+		f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
+		if err != nil{
+			fmt.Println("error with file", err)
+		}
+		defer f.Close()
+
+		_, err = f.WriteString(logbook[i] + "\n")
+		if err != nil {
+			fmt.Println("error writing to file")
+		}
+		fmt.Println("file written to succesfully")
+	}
+
+	//write to json
+	userjson := "usersjson.json"
+	us, err := os.Create(userjson)
+	if err != nil{
+		fmt.Println("error creating file")
+	}
+	defer us.Close()
+	encoder := json.NewEncoder(us)
+	err = encoder.Encode(t)
+	encoder.SetIndent("", "  ")
+	if err != nil{
+		fmt.Println("error encoding struct to json file")
+	}else {
+		fmt.Println("written to json")
+	}
+	
+	//read from json
+	us, err = os.OpenFile(userjson, os.O_RDONLY, 0644)
+	if err != nil {
+		fmt.Println("error reading from file")
+	}
+
+	decoder := json.NewDecoder(us)	
+	err = decoder.Decode(&t)
+	if err != nil{
+		fmt.Println("error decoding struct")
+		return
+	}
+	fmt.Printf("decode successfully %v\n", t)
 }
