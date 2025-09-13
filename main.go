@@ -152,4 +152,55 @@ func main(){
 		return
 	}
 	fmt.Printf("decode successfully %v\n", t)
+
+
+	yt := concepts.Admin{
+		Privileges: []string{"read", "write", "delete"},
+		User: concepts.User{
+			AccountId: "23",
+			Person: concepts.Person{
+				Name: "ty",
+				Career: "doc",
+				Email: "t@mail.com",
+				Age: 19,
+			},
+		},
+	}
+
+
+	//write to json
+	adfile := "admin.json"
+	wa, err := os.OpenFile(adfile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
+	if err != nil{
+		fmt.Println("error writing to file", err)
+		return 
+	}
+	fmt.Println("created")
+	defer wa.Close()
+
+	//encode
+
+	encoderAd := json.NewEncoder(wa)
+	err = encoderAd.Encode(yt)
+	if err != nil{
+		fmt.Println("error encoding file", err)
+		return
+	}
+	fmt.Println("file successfully written")
+
+	//deccode
+	dya, err := os.OpenFile(adfile, os.O_RDONLY, 0644)
+	if err != nil {
+		fmt.Println("error reading from file")
+	}
+
+	defer dya.Close()
+	
+	decoderAd := json.NewDecoder(dya)
+	err = decoderAd.Decode(&yt)
+	if err != nil{
+		fmt.Println("error decoding file", err)
+		return
+	}
+	fmt.Printf(" file successfully read %v\n", yt)
 }
