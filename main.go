@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -9,7 +10,12 @@ import (
 	"github.com/Dev-Tams/go-module/concepts"
 )
 
-
+var records = [][]string{
+		{"name" , "age", "sex"},
+		{"tami", "19", "m"},
+		{"john", "40", "m"}, 
+		{"", "", ""},
+	}
 func main(){
 
 	t := concepts.User{
@@ -19,6 +25,8 @@ func main(){
 		},
 		AccountId: "A123",
 	}
+
+	
 	m := concepts.SayHi()
 
 	fmt.Println(m)
@@ -176,31 +184,91 @@ func main(){
 		return 
 	}
 	fmt.Println("created")
-	defer wa.Close()
+	
 
+	defer wa.Close()
 	//encode
 
-	encoderAd := json.NewEncoder(wa)
-	err = encoderAd.Encode(yt)
+	encad := json.NewEncoder(wa)
+	err =  encad.Encode(&yt)
+	encad.SetIndent("", "  ")
 	if err != nil{
 		fmt.Println("error encoding file", err)
 		return
 	}
-	fmt.Println("file successfully written")
+	fmt.Println("file encoded successfully")
 
-	//deccode
+	// wa.Seek(0, 0) 
+	// deccode
 	dya, err := os.OpenFile(adfile, os.O_RDONLY, 0644)
 	if err != nil {
-		fmt.Println("error reading from file")
+		fmt.Println("error opening file", err)
+		return
 	}
 
 	defer dya.Close()
-	
-	decoderAd := json.NewDecoder(dya)
-	err = decoderAd.Decode(&yt)
-	if err != nil{
+
+	daf := json.NewDecoder(dya)
+	err = daf.Decode(&yt)
+	if err != nil {
 		fmt.Println("error decoding file", err)
 		return
 	}
-	fmt.Printf(" file successfully read %v\n", yt)
+	fmt.Printf("read from ad file successfully %v\n", yt)
+
+	
+
+
+	//csv
+	//create a csv file
+
+	csvfile := "data.csv"
+
+	csf, err :=os.OpenFile(csvfile, os.O_CREATE|os.O_RDWR, 0644)
+	if err != nil{
+		fmt.Println("error creating/opening file", err)
+		return
+	}
+	fmt.Println("file created/opened successfully")
+
+	defer csf.Close()
+
+	ncsv := csv.NewWriter(csf)
+	err = ncsv.WriteAll(records)
+
+	defer ncsv.Flush()
+	if err != nil{
+		fmt.Println("error writing to file", err)
+	}
+	for _, record := range records{
+		err = ncsv.Write(record)
+		if err != nil{
+			fmt.Println("error writing to file", err)
+		}
+	}
+	fmt.Println(" csv written successfully")
+
+	//read from csv
+
+	rfcsv, err :=os.OpenFile(csvfile, os.O_APPEND|os.O_RDONLY, 0644)
+	if err != nil{
+		fmt.Println("error creating/opening file", err)
+		return
+	}
+	fmt.Println("file created/opened successfully")
+
+	defer rfcsv.Close()
+
+
+	rcsv := csv.NewReader(rfcsv)
+	records, err = rcsv.ReadAll()
+	if err != nil{
+		fmt.Println("error reading from file", err)
+		return
+	}
+	for i, record := range records{
+		fmt.Printf("record %d: %v\n", i, record)
+	}
+
+
 }
